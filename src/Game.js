@@ -9,8 +9,43 @@ class Game extends Component {
 		this.state = {
 			bigPicture: 'The Big Picture',
 			periods: [
-				'Start period',
-				'End period'
+				{
+					name: 'Start period',
+					events: [
+						{
+							name: 'Event 1',
+							scenes: [
+								{
+									question: 'Question for scene 1'
+								},
+								{
+									question: 'Question for scene 2'
+								}
+							]
+						},
+						{
+							name: 'Event 2',
+							scenes: [
+								{
+									question: 'Question for scene 3'
+								}
+							]
+						}
+					]
+				},
+				{
+					name: 'End period',
+					events: [
+						{
+							name: 'Event 3',
+							scenes: []
+						},
+						{
+							name: 'Event 4',
+							scenes: []
+						}
+					]
+				}
 			]
 		};
 	}
@@ -18,7 +53,7 @@ class Game extends Component {
   render() {
 		const periods = this.state.periods.map((period) => {
 			return (
-				<Period name={period} />
+				<Period name={period.name} events={period.events} />
 			);
 		});
     return (
