@@ -5,11 +5,11 @@ class Period extends Component {
 	render() {
 		const events = this.props.events.map((event) => {
 			return(
-				<Event name={event.name} scenes={event.scenes} />
+				<Event key={event.id} id={event.id} periodId={this.props.id} name={event.name} scenes={event.scenes} />
 			);
 		});
 		return (
-			<div class="period">
+			<div id={'period-' + this.props.id} className="period">
 				<header>
 					<h2>{this.props.name}</h2>
 				</header>
