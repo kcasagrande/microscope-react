@@ -13,6 +13,7 @@ class Period extends Component {
 				<header>
 					<h2>{this.props.name}</h2>
 				</header>
+				<button onClick={() => this.props.onClick()}>+</button>
 				{events}
 			</div>
 		);

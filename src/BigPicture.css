@@ -1,0 +1,11 @@
+.bigPicture {
+	font-weight: bold;
+	font-size: xx-large;
+	text-align: center;
+	border: none;
+}
+
+.bigPicture.focused {
+	border: thin lightgrey dotted;
+	border-radius: 1px;
+}
