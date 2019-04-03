@@ -6,7 +6,8 @@ class BigPicture extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			focused: false
+			focused: false,
+			title: this.props.title
 		};
 	}
 
@@ -22,9 +23,15 @@ class BigPicture extends Component {
 		});
 	}
 
+	handleChange(event) {
+		this.setState({
+			title: event.target.value
+		});
+	}
+
 	render() {
 		return (
-			<input className={'bigPicture ' + (this.state.focused ? 'focused' : '')} type="text" onFocus={() => this.focus()} onBlur={() => this.blur()} defaultValue={this.props.title} />
+			<input className={'bigPicture ' + (this.state.focused ? 'focused' : '')} type="text" onFocus={() => this.focus()} onBlur={() => this.blur()} value={this.state.title} onChange={(event) => this.handleChange(event)} />
 		);
 	}
 }
