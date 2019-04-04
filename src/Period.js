@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Event from './Event';
+import './Period.css';
 
 class Period extends Component {
 	render() {
@@ -9,9 +10,9 @@ class Period extends Component {
 			);
 		});
 		return (
-			<div id={'period-' + this.props.id} className="period">
+			<div id={'period-' + this.props.id} className={'period' + (!this.props.name ? ' unnamed' : '')}>
 				<header>
-					<h2>{this.props.name}</h2>
+					<h2 className='name'>{this.props.name}</h2>
 				</header>
 				<button onClick={() => this.props.onClick()}>+</button>
 				{events}

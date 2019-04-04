@@ -1,0 +1,7 @@
+.period.unnamed {
+	color: grey;
+}
+
+.period.unnamed::before {
+	content: '<Click to name the period>';
+}

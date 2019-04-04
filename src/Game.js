@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Game.css';
 import BigPicture from './BigPicture';
 import Period from './Period';
+import AddPeriod from './AddPeriod';
 import GameInput from './GameInput';
 
 class Game extends Component {
@@ -66,16 +67,29 @@ class Game extends Component {
 		});
 	}
 
+	addPeriodBefore(followingPeriodId) {
+		const periods = this.state.periods;
+		const insertIndex = periods.findIndex((period) => { return period.id === followingPeriodId; });
+		periods.splice(insertIndex, 0, {id: 'new', name: '', events: []});
+		this.setState(
+			{periods: periods}
+		);
+	}
+
 	updateData(data) {
 		this.setState(data);
 	}
 
   render() {
-		const periods = this.state.periods.map((period) => {
+		const periods = this.state.periods.flatMap((period) => {
 			return (
-				<Period key={period.id} id={period.id} name={period.name} events={period.events} />
+				[
+					<AddPeriod key={'addBefore-' + period.id} onClick={() => this.addPeriodBefore(period.id)} />,
+					<Period key={period.id} id={period.id} name={period.name} events={period.events} />
+				]
 			);
 		});
+		periods.shift();
     return (
 			<div>
 				<main className="game">
