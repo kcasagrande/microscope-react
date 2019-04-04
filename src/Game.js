@@ -4,6 +4,7 @@ import BigPicture from './BigPicture';
 import Period from './Period';
 import AddPeriod from './AddPeriod';
 import GameInput from './GameInput';
+const uuid = require('uuid/v4');
 
 class Game extends Component {
 	constructor(props) {
@@ -70,7 +71,7 @@ class Game extends Component {
 	addPeriodBefore(followingPeriodId) {
 		const periods = this.state.periods;
 		const insertIndex = periods.findIndex((period) => { return period.id === followingPeriodId; });
-		periods.splice(insertIndex, 0, {id: 'new', name: '', events: []});
+		periods.splice(insertIndex, 0, {id: uuid(), name: '', events: []});
 		this.setState(
 			{periods: periods}
 		);
