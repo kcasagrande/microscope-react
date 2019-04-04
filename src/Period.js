@@ -11,11 +11,12 @@ class Period extends Component {
 		});
 		return (
 			<div id={'period-' + this.props.id} className={'period' + (!this.props.name ? ' unnamed' : '')}>
-				<header>
+				<header className='card'>
 					<h2 className='name'>{this.props.name}</h2>
 				</header>
-				<button onClick={() => this.props.onClick()}>+</button>
-				{events}
+				<main className='events'>
+					{events}
+				</main>
 			</div>
 		);
 	}

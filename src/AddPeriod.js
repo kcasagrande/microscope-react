@@ -7,7 +7,7 @@ class AddPeriod extends Component {
 
 	render() {
 		return(
-			<button onClick={() => this.handleClick()}>Add a Period</button>
+			<button onClick={() => this.handleClick()}>+</button>
 		);
 	}
 }

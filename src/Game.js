@@ -95,7 +95,9 @@ class Game extends Component {
 			<div>
 				<main className="game">
 					<BigPicture title={this.state.bigPicture} updateParent={(value) => this.updateBigPicture(value)} />
-					{periods}
+					<div className='periods'>
+						{periods}
+					</div>
 				</main>
 				<GameInput data={JSON.stringify(this.state, null, 2)} updateParent={(value) => this.updateData(value)} />
 			</div>
