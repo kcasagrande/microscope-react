@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Game.css';
 import BigPicture from './BigPicture';
 import Period from './Period';
+import GameInput from './GameInput';
 
 class Game extends Component {
 	constructor(props) {
@@ -59,6 +60,16 @@ class Game extends Component {
 		};
 	}
 
+	updateBigPicture(bigPicture) {
+		this.setState({
+			bigPicture: bigPicture
+		});
+	}
+
+	updateData(data) {
+		this.setState(data);
+	}
+
   render() {
 		const periods = this.state.periods.map((period) => {
 			return (
@@ -66,10 +77,13 @@ class Game extends Component {
 			);
 		});
     return (
-			<main className="game">
-				<BigPicture title={this.state.bigPicture}/>
-				{periods}
-			</main>
+			<div>
+				<main className="game">
+					<BigPicture title={this.state.bigPicture} updateParent={(value) => this.updateBigPicture(value)} />
+					{periods}
+				</main>
+				<GameInput data={JSON.stringify(this.state, null, 2)} updateParent={(value) => this.updateData(value)} />
+			</div>
     );
   }
 }
