@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Scene from './Scene';
+import Scene from 'Scene/Scene.react';
 
-class Event extends Component {
+class EventArea extends Component {
 	render() {
 		const scenes = this.props.scenes.map((scene) => {
 			return (
@@ -20,4 +20,4 @@ class Event extends Component {
 	}
 }
 
-export default Event;
+export default EventArea;

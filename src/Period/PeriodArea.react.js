@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Event from 'Event';
+import EventArea from 'Event/EventArea.react';
 import './Period.css';
 
-class Period extends Component {
+class PeriodArea extends Component {
 	render() {
 		const events = this.props.events.map((event) => {
 			return(
-				<Event key={event.id} id={event.id} periodId={this.props.id} name={event.name} scenes={event.scenes} />
+				<EventArea key={event.id} id={event.id} periodId={this.props.id} name={event.name} scenes={event.scenes} />
 			);
 		});
 		return (
@@ -22,4 +22,4 @@ class Period extends Component {
 	}
 }
 
-export default Period;
+export default PeriodArea;

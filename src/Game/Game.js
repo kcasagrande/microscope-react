@@ -1,6 +1,7 @@
 const Entity = require('Entity/Entity');
+const Period = require('Period/Period');
 
-const Game = (bigPicture, startPeriod, endPeriod, otherPeriods = []) => {
+const Game = (bigPicture = 'Big Picture', startPeriod = Period('Start'), endPeriod = Period('End'), otherPeriods = []) => {
 	const periods = [ startPeriod ].concat(otherPeriods).concat([ endPeriod ]);
 
 	const findIndexOfPeriodId = (periodId) => {
@@ -16,6 +17,10 @@ const Game = (bigPicture, startPeriod, endPeriod, otherPeriods = []) => {
 				bigPicture: bigPicture,
 				periods: periods.map((period) => period.toJSON())
 			};
+		},
+
+		setBigPicture: (bigPicture) => {
+			return Game(bigPicture, startPeriod, endPeriod, otherPeriods);
 		},
 
 		addPeriod: (beforeId, period) => {
