@@ -9,11 +9,18 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "NODE_PATH=src/ react-scripts start",
+    "build": "NODE_PATH=src/ react-scripts build",
+    "test": "NODE_PATH=src/ mocha",
+    "eject": "react-scripts eject",
+		"watch": "npm-watch"
   },
+	"watch": {
+		"test": {
+			"patterns": ["src", "test"],
+			"extensions": "js"
+		}
+	},
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -22,5 +29,10 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.0.2",
+    "npm-watch": "^0.6.0"
+  }
 }

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './Game.css';
-import BigPicture from './BigPicture';
-import Period from './Period';
-import AddPeriod from './AddPeriod';
-import GameInput from './GameInput';
+import BigPicture from 'BigPicture';
+import Period from 'Period/Period.react';
+import AddPeriod from 'AddPeriod';
+import GameInput from 'GameInput';
 const uuid = require('uuid/v4');
 
-class Game extends Component {
+class GameBoard extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -105,4 +105,4 @@ class Game extends Component {
   }
 }
 
-export default Game;
+export default GameBoard;
