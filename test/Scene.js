@@ -16,4 +16,21 @@ describe('Scene', function() {
 
 	});
 
+	context('requireCharacter', function() {
+
+		it('should have the required character after requiring a character on a Scene where there was none', function() {
+			const character = 'First character';
+			const scene = Scene('First question').requireCharacter(character);
+			assert.deepEqual(scene.requiredCharacters, [character]);
+		});
+
+		it('should have both required characters after requiring a character on a Scene where there was one', function() {
+			const character1 = 'First character';
+			const character2 = 'Second character';
+			const scene = Scene('First question', [character1]).requireCharacter(character2);
+			assert.deepEqual(scene.requiredCharacters, [character1, character2]);
+		});
+
+	});
+
 });
