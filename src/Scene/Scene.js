@@ -23,6 +23,10 @@ const Scene = (id = uuid()) => (question = 'The question', requiredCharacters = 
 		}
 	});
 
+	def('freeCharacter', (description) => {
+		return Scene(id)(question, requiredCharacters.filter((character) => character !== description));
+	});
+
 	return Object.freeze(scene);
 }
 

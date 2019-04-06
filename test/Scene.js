@@ -41,6 +41,27 @@ describe('Scene', function() {
 
 	});
 
+	context('freeCharacter', function() {
+
+		it('should remove the freed character from the required characters when it was required on the Scene', function() {
+			const character1 = 'First character';
+			const character2 = 'Second character';
+			const character3 = 'Third character';
+			const scene = Scene()('First question', [character1, character2, character3]);
+			const result = scene.freeCharacter('Second character');
+			result.should.deep.equal(Scene(scene.id)('First question', [character1, character3]));
+		});
+
+		it('should leave the required characters when the freed character was not required on the Scene', function() {
+			const character1 = 'First character';
+			const character2 = 'Second character';
+			const scene = Scene()('First question', [character1, character2]);
+			const result = scene.freeCharacter('Third character');
+			result.should.deep.equal(Scene(scene.id)('First question', [character1, character2]));
+		});
+
+	});
+
 	describe('fromJSON', function() {
 
 		it('should format to a correct JSON', function() {
