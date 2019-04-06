@@ -2,23 +2,28 @@ const Entity = require('Entity/Entity');
 const uuid = require('uuid/v4');
 
 const Scene = (id = uuid()) => (question = 'The question', requiredCharacters = []) => {
-	return Object.freeze({
+	const scene = {
 		id: id,
 		question: question,
-		requiredCharacters: requiredCharacters,
+		requiredCharacters: requiredCharacters
+	};
 
-		setQuestion: (question) => {
-			return Scene(id)(question, requiredCharacters);
-		},
+	const def = require('helper/ImmutableObject').defineMethod(scene);
 
-		requireCharacter: (description) => {
+	def('setQuestion', (question) => {
+		return Scene(id)(question, requiredCharacters);
+	});
+
+	def('requireCharacter', (description) => {
+		if(requiredCharacters.length < 2) {
 			return Scene(id)(question, requiredCharacters.slice().concat([description]));
-		},
-
-		equals: (otherScene) => {
-			return (otherScene.id === id && otherScene.question === question && otherScene.requiredCharacters.every((requiredCharacter, index) => requiredCharacters[index] === requiredCharacter));
+		}
+		else {
+			throw Error('Can\'t have more than two required characters');
 		}
 	});
+
+	return Object.freeze(scene);
 }
 
 Scene.fromJSON = (json) => {

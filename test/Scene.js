@@ -31,6 +31,14 @@ describe('Scene', function() {
 			assert.deepEqual(scene.requiredCharacters, [character1, character2]);
 		});
 
+		it('should throw when thying to require a character on a Scene where there was already two', function() {
+			const character1 = 'First character';
+			const character2 = 'Second character';
+			const character3 = 'Third character';
+			const scene = Scene()('First question', [character1, character2]);
+			(() => scene.requireCharacter(character3)).should.throw('Can\'t have more than two required characters');
+		});
+
 	});
 
 	describe('fromJSON', function() {
@@ -41,7 +49,7 @@ describe('Scene', function() {
 				question: 'What?',
 				requiredCharacters: ['Character 1']
 			});
-			assert.isTrue(scene.equals(Scene('id')('What?', ['Character 1'])));
+			scene.should.deep.equal(Scene('id')('What?', ['Character 1']));
 		});
 
 	});
