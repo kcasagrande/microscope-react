@@ -12,13 +12,15 @@
     "start": "NODE_PATH=src/ react-scripts start",
     "build": "NODE_PATH=src/ react-scripts build",
     "test": "NODE_PATH=src/ mocha",
+    "test-watch": "NODE_PATH=src/ mocha --reporter min",
     "eject": "react-scripts eject",
 		"watch": "npm-watch"
   },
 	"watch": {
-		"test": {
+		"test-watch": {
 			"patterns": ["src", "test"],
-			"extensions": "js"
+			"extensions": "js",
+			"quiet": true
 		}
 	},
   "eslintConfig": {
