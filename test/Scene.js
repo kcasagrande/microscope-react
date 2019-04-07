@@ -62,6 +62,27 @@ describe('Scene', function() {
 
 	});
 
+	context('forbidCharacter', function() {
+
+		it('should have the forbidden character when there was none in the Scene', function() {
+			const scene = Scene()('First question', ['Required character'], []);
+			const result = scene.forbidCharacter('Forbidden character');
+			result.should.deep.equal(Scene(scene.id)('First question', ['Required character'], ['Forbidden character']));
+		});
+
+		it('should have the forbidden character when there was already one in the Scene', function() {
+			const scene = Scene()('First question', ['Required character'], ['First forbidden character']);
+			const result = scene.forbidCharacter('Second forbidden character');
+			result.should.deep.equal(Scene(scene.id)('First question', ['Required character'], ['First forbidden character', 'Second forbidden character']));
+		});
+
+		it('should throw when there was already two forbidden characters in the Scene', function() {
+			const scene = Scene()('First question', ['Required character'], ['First forbidden character', 'Second forbidden character']);
+			(() => scene.forbidCharacter('Third forbidden character')).should.throw('Can\'t have more than two forbidden characters');
+		});
+
+	});
+
 	describe('fromJSON', function() {
 
 		it('should format to a correct JSON', function() {
