@@ -83,6 +83,16 @@ describe('Scene', function() {
 
 	});
 
+	context('allowCharacter', function() {
+
+		it('should remove the allowed character from the forbidden characters when it was forbidden on the Scene', function() {
+			const scene = Scene()('Question', ['Required character'], ['First forbidden character', 'Second forbidden character'], 'Frame');
+			const result = scene.allowCharacter('First forbidden character');
+			result.should.deep.equal(Scene(scene.id)('Question', ['Required character'], ['Second forbidden character'], 'Frame'));
+		});
+
+	});
+
 	context('setupFrame', function() {
 
 		it('should setup the frame of a Scene when there was none', function() {

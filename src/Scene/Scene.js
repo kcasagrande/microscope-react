@@ -47,6 +47,10 @@ const Scene = (
 		}
 	});
 
+	def('allowCharacter', (allowedCharacter) => {
+		return Scene(id)(question, requiredCharacters, forbiddenCharacters.filter((character) => character !== allowedCharacter), frame, answer);
+	});
+
 	def('setupFrame', (frame) => {
 		return Scene(id)(question, requiredCharacters, forbiddenCharacters, frame, answer);
 	});
