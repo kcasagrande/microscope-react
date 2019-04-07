@@ -44,12 +44,9 @@ describe('Scene', function() {
 	context('freeCharacter', function() {
 
 		it('should remove the freed character from the required characters when it was required on the Scene', function() {
-			const character1 = 'First character';
-			const character2 = 'Second character';
-			const character3 = 'Third character';
-			const scene = Scene()('Question', [character1, character2, character3], ['Forbidden character'], 'Frame');
-			const result = scene.freeCharacter('Second character');
-			result.should.deep.equal(Scene(scene.id)('Question', [character1, character3], ['Forbidden character'], 'Frame'));
+			const scene = Scene()('Question', ['First required character', 'Second required character'], ['Forbidden character'], 'Frame');
+			const result = scene.freeCharacter('First required character');
+			result.should.deep.equal(Scene(scene.id)('Question', ['Second required character'], ['Forbidden character'], 'Frame'));
 		});
 
 		it('should leave the required characters when the freed character was not required on the Scene', function() {
