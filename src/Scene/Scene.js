@@ -7,46 +7,52 @@ const Scene = (
 	question = 'The question',
 	requiredCharacters = [],
 	forbiddenCharacters = [],
-	frame = ''
+	frame = '',
+	answer = ''
 ) => {
 	const scene = {
 		id: id,
 		question: question,
 		requiredCharacters: requiredCharacters,
 		forbiddenCharacters: forbiddenCharacters,
-		frame: frame
+		frame: frame,
+		answer: answer
 	};
 
 	const def = require('helper/ImmutableObject').defineMethod(scene);
 
 	def('setQuestion', (question) => {
-		return Scene(id)(question, requiredCharacters, forbiddenCharacters, frame);
+		return Scene(id)(question, requiredCharacters, forbiddenCharacters, frame, answer);
 	});
 
-	def('requireCharacter', (description) => {
+	def('requireCharacter', (requiredCharacter) => {
 		if(requiredCharacters.length < 2) {
-			return Scene(id)(question, requiredCharacters.concat([description]), forbiddenCharacters, frame);
+			return Scene(id)(question, requiredCharacters.concat([requiredCharacter]), forbiddenCharacters, frame, answer);
 		}
 		else {
 			throw Error('Can\'t have more than two required characters');
 		}
 	});
 
-	def('freeCharacter', (description) => {
-		return Scene(id)(question, requiredCharacters.filter((character) => character !== description), forbiddenCharacters, frame);
+	def('freeCharacter', (freedCharacter) => {
+		return Scene(id)(question, requiredCharacters.filter((character) => character !== freedCharacter), forbiddenCharacters, frame, answer);
 	});
 
-	def('forbidCharacter', (description) => {
+	def('forbidCharacter', (forbiddenCharacter) => {
 		if(forbiddenCharacters.length < 2) {
-			return Scene(id)(question, requiredCharacters, forbiddenCharacters.concat([description]), frame);
+			return Scene(id)(question, requiredCharacters, forbiddenCharacters.concat([forbiddenCharacter]), frame, answer);
 		}
 		else {
 			throw Error('Can\'t have more than two forbidden characters');
 		}
 	});
 
-	def('setupFrame', (description) => {
-		return Scene(id)(question, requiredCharacters, forbiddenCharacters, description);
+	def('setupFrame', (frame) => {
+		return Scene(id)(question, requiredCharacters, forbiddenCharacters, frame, answer);
+	});
+
+	def('setAnswer', (answer) => {
+		return Scene(id)(question, requiredCharacters, forbiddenCharacters, frame, answer);
 	});
 
 	return Object.freeze(scene);
