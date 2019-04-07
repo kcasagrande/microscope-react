@@ -6,24 +6,26 @@ const Scene = (
 ) => (
 	question = 'The question',
 	requiredCharacters = [],
-	forbiddenCharacters = []
+	forbiddenCharacters = [],
+	frame = ''
 ) => {
 	const scene = {
 		id: id,
 		question: question,
 		requiredCharacters: requiredCharacters,
-		forbiddenCharacters: forbiddenCharacters
+		forbiddenCharacters: forbiddenCharacters,
+		frame: frame
 	};
 
 	const def = require('helper/ImmutableObject').defineMethod(scene);
 
 	def('setQuestion', (question) => {
-		return Scene(id)(question, requiredCharacters, forbiddenCharacters);
+		return Scene(id)(question, requiredCharacters, forbiddenCharacters, frame);
 	});
 
 	def('requireCharacter', (description) => {
 		if(requiredCharacters.length < 2) {
-			return Scene(id)(question, requiredCharacters.concat([description]), forbiddenCharacters);
+			return Scene(id)(question, requiredCharacters.concat([description]), forbiddenCharacters, frame);
 		}
 		else {
 			throw Error('Can\'t have more than two required characters');
@@ -31,16 +33,20 @@ const Scene = (
 	});
 
 	def('freeCharacter', (description) => {
-		return Scene(id)(question, requiredCharacters.filter((character) => character !== description), forbiddenCharacters);
+		return Scene(id)(question, requiredCharacters.filter((character) => character !== description), forbiddenCharacters, frame);
 	});
 
 	def('forbidCharacter', (description) => {
 		if(forbiddenCharacters.length < 2) {
-			return Scene(id)(question, requiredCharacters, forbiddenCharacters.concat([description]));
+			return Scene(id)(question, requiredCharacters, forbiddenCharacters.concat([description]), frame);
 		}
 		else {
 			throw Error('Can\'t have more than two forbidden characters');
 		}
+	});
+
+	def('setupFrame', (description) => {
+		return Scene(id)(question, requiredCharacters, forbiddenCharacters, description);
 	});
 
 	return Object.freeze(scene);
