@@ -15,7 +15,22 @@ const Event = (id = uuid()) => ({
 
 	def('setTitle', (title) => {
 		return Event(id)({
-			title: title
+			title: title,
+			tone: tone
+		});
+	});
+
+	def('setToneAsLight', () => {
+		return Event(id)({
+			title: title,
+			tone: Tone.Light
+		});
+	});
+
+	def('setToneAsDark', () => {
+		return Event(id)({
+			title: title,
+			tone: Tone.Dark
 		});
 	});
 
@@ -24,7 +39,8 @@ const Event = (id = uuid()) => ({
 
 Event.fromJSON = (json) => {
 	return Event(json.id)({
-		title: json.title
+		title: json.title,
+		tone: Tone.fromJSON(json.tone)
 	});
 };
 
