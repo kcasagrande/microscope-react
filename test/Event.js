@@ -6,15 +6,21 @@ describe('Event', function() {
 	context('setTitle', function() {
 
 		it('should set the title of the Event to the given one when there was none', function() {
-			const event = Event()();
+			const event = Event()({});
 			const result = event.setTitle('Title');
-			result.should.deep.equal(Event(event.id)('Title'));
+			result.should.deep.equal(Event(event.id)({
+				title: 'Title'
+			}));
 		});
 
 		it('should set the title of the Event to the given one when there was already one', function() {
-			const event = Event()('Title');
+			const event = Event()({
+				title: 'Title'
+			});
 			const result = event.setTitle('New title');
-			result.should.deep.equal(Event(event.id)('New title'));
+			result.should.deep.equal(Event(event.id)({
+				title: 'New title'
+			}));
 		});
 
 	});
@@ -26,7 +32,9 @@ describe('Event', function() {
 				id: 'id',
 				title: 'Title'
 			});
-			event.should.deep.equal(Event('id')('Title'));
+			event.should.deep.equal(Event('id')({
+				title: 'Title'
+			}));
 		});
 
 	});
