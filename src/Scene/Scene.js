@@ -5,18 +5,18 @@ const Scene = (
 	id = uuid()
 ) => ({
 	question = 'The question',
+	frame = '',
 	requiredCharacters = [],
 	forbiddenCharacters = [],
-	frame = '',
 	answer = '',
 	tone = Tone.Light
 }) => {
 	const scene = {
 		id: id,
 		question: question,
+		frame: frame,
 		requiredCharacters: requiredCharacters,
 		forbiddenCharacters: forbiddenCharacters,
-		frame: frame,
 		answer: answer,
 		tone: tone
 	};
@@ -26,9 +26,9 @@ const Scene = (
 	def('setQuestion', (question) => {
 		return Scene(id)({
 			question: question,
+			frame: frame,
 			requiredCharacters: requiredCharacters,
 			forbiddenCharacters: forbiddenCharacters,
-			frame: frame,
 			answer: answer,
 			tone: tone
 		});
@@ -38,9 +38,9 @@ const Scene = (
 		if(requiredCharacters.length < 2) {
 			return Scene(id)({
 				question: question,
+				frame: frame,
 				requiredCharacters: requiredCharacters.concat([requiredCharacter]),
 				forbiddenCharacters: forbiddenCharacters,
-				frame: frame,
 				answer: answer,
 				tone: tone
 			});
@@ -53,9 +53,9 @@ const Scene = (
 	def('freeCharacter', (freedCharacter) => {
 		return Scene(id)({
 			question: question,
+			frame: frame,
 			requiredCharacters: requiredCharacters.filter((character) => character !== freedCharacter),
 			forbiddenCharacters: forbiddenCharacters,
-			frame: frame,
 			answer: answer,
 			tone: tone
 		});
@@ -65,9 +65,9 @@ const Scene = (
 		if(forbiddenCharacters.length < 2) {
 			return Scene(id)({
 				question: question,
+				frame: frame,
 				requiredCharacters: requiredCharacters,
 				forbiddenCharacters: forbiddenCharacters.concat([forbiddenCharacter]),
-				frame: frame,
 				answer: answer,
 				tone: tone
 			});
@@ -80,9 +80,9 @@ const Scene = (
 	def('allowCharacter', (allowedCharacter) => {
 		return Scene(id)({
 			question: question,
+			frame: frame,
 			requiredCharacters: requiredCharacters,
 			forbiddenCharacters: forbiddenCharacters.filter((character) => character !== allowedCharacter),
-			frame: frame,
 			answer: answer,
 			tone: tone
 		});
@@ -91,9 +91,9 @@ const Scene = (
 	def('setupFrame', (frame) => {
 		return Scene(id)({
 			question: question,
+			frame: frame,
 			requiredCharacters: requiredCharacters,
 			forbiddenCharacters: forbiddenCharacters,
-			frame: frame,
 			answer: answer,
 			tone: tone
 		});
@@ -102,9 +102,9 @@ const Scene = (
 	def('setAnswer', (answer) => {
 		return Scene(id)({
 			question: question,
+			frame: frame,
 			requiredCharacters: requiredCharacters,
 			forbiddenCharacters: forbiddenCharacters,
-			frame: frame,
 			answer: answer,
 			tone: tone
 		});
@@ -113,9 +113,9 @@ const Scene = (
 	def('setToneAsLight', () => {
 		return Scene(id)({
 			question: question,
+			frame: frame,
 			requiredCharacters: requiredCharacters,
 			forbiddenCharacters: forbiddenCharacters,
-			frame: frame,
 			answer: answer,
 			tone: Tone.Light
 		});
@@ -124,9 +124,9 @@ const Scene = (
 	def('setToneAsDark', () => {
 		return Scene(id)({
 			question: question,
+			frame: frame,
 			requiredCharacters: requiredCharacters,
 			forbiddenCharacters: forbiddenCharacters,
-			frame: frame,
 			answer: answer,
 			tone: Tone.Dark
 		});
@@ -138,9 +138,9 @@ const Scene = (
 Scene.fromJSON = (json) => {
 	return Scene(json.id)({
 		question: json.question,
+		frame: json.frame,
 		requiredCharacters: json.requiredCharacters.slice(),
 		forbiddenCharacters: json.forbiddenCharacters.slice(),
-		frame: json.frame,
 		answer: json.answer,
 		tone: Tone.fromJSON(json.tone)
 	});
