@@ -4,7 +4,8 @@ const uuid = require('uuid/v4');
 require('helper/ImmutableArray')();
 const NoSceneWithId = require('Scene/NoSceneWithId');
 
-const Event = (id = uuid()) => ({
+const Event = ({
+	id = uuid(),
 	title = '',
 	tone = Tone.Light,
 	scenes = []
@@ -19,7 +20,8 @@ const Event = (id = uuid()) => ({
 	const def = require('helper/ImmutableObject').defineMethod(event);
 
 	def('setTitle', (title) => {
-		return Event(id)({
+		return Event({
+			id: id,
 			title: title,
 			tone: tone,
 			scenes: scenes
@@ -27,7 +29,8 @@ const Event = (id = uuid()) => ({
 	});
 
 	def('setToneAsLight', () => {
-		return Event(id)({
+		return Event({
+			id: id,
 			title: title,
 			tone: Tone.Light,
 			scenes: scenes
@@ -35,7 +38,8 @@ const Event = (id = uuid()) => ({
 	});
 
 	def('setToneAsDark', () => {
-		return Event(id)({
+		return Event({
+			id: id,
 			title: title,
 			tone: Tone.Dark,
 			scenes: scenes
@@ -43,12 +47,13 @@ const Event = (id = uuid()) => ({
 	});
 
 	def('addScene', ({
-		scene = Scene()(),
+		scene = Scene(),
 		before = undefined
 	} = {}) => {
 		if(before) {
 			try {
-				return Event(id)({
+				return Event({
+					id: id,
 					title: title,
 					tone: tone,
 					scenes: scenes.insertBefore(((scene) => scene.id === before), [scene])
@@ -64,7 +69,8 @@ const Event = (id = uuid()) => ({
 			}
 		}
 		else {
-			return Event(id)({
+			return Event({
+				id: id,
 				title: title,
 				tone: tone,
 				scenes: scenes.concat([scene])
@@ -76,7 +82,8 @@ const Event = (id = uuid()) => ({
 };
 
 Event.fromJSON = (json) => {
-	return Event(json.id)({
+	return Event({
+		id: json.id,
 		title: json.title,
 		tone: Tone.fromJSON(json.tone)
 	});

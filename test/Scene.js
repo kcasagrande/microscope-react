@@ -1,5 +1,4 @@
 const should = require('chai').should();
-const assert = require('chai').assert;
 const Scene = require('Scene/Scene');
 const Tone = require('Tone/Tone');
 
@@ -8,7 +7,7 @@ describe('Scene', function() {
 	context('setQuestion', function() {
 
 		it('should set the question of the Scene to the given question', function() {
-			const scene = Scene()({
+			const scene = Scene({
 				question: 'Question',
 				frame: 'Frame',
 				requiredCharacters: ['Required character'],
@@ -17,7 +16,8 @@ describe('Scene', function() {
 				tone: Tone.Light
 			});
 			const result = scene.setQuestion('New question');
-			result.should.deep.equal(Scene(scene.id)({
+			result.should.deep.equal(Scene({
+				id: scene.id,
 				question: 'New question',
 				frame: 'Frame',
 				requiredCharacters: ['Required character'],
@@ -33,7 +33,7 @@ describe('Scene', function() {
 
 		it('should have the required character after requiring a character on a Scene where there was none', function() {
 			const character = 'First character';
-			const scene = Scene()({
+			const scene = Scene({
 				question: 'Question',
 				frame: 'Frame',
 				requiredCharacters: [],
@@ -42,7 +42,8 @@ describe('Scene', function() {
 				tone: Tone.Light
 			});
 			const result = scene.requireCharacter(character);
-			result.should.deep.equal(Scene(scene.id)({
+			result.should.deep.equal(Scene({
+				id: scene.id,
 				question: 'Question',
 				frame: 'Frame',
 				requiredCharacters: [character],
@@ -55,7 +56,7 @@ describe('Scene', function() {
 		it('should have both required characters after requiring a character on a Scene where there was one', function() {
 			const character1 = 'First character';
 			const character2 = 'Second character';
-			const scene = Scene()({
+			const scene = Scene({
 				question: 'Question',
 				frame: 'Frame',
 				requiredCharacters: [character1],
@@ -64,7 +65,8 @@ describe('Scene', function() {
 				tone: Tone.Light
 			});
 			const result = scene.requireCharacter(character2);
-			result.should.deep.equal(Scene(scene.id)({
+			result.should.deep.equal(Scene({
+				id: scene.id,
 				question: 'Question',
 				frame: 'Frame',
 				requiredCharacters: [character1, character2],
@@ -78,7 +80,7 @@ describe('Scene', function() {
 			const character1 = 'First character';
 			const character2 = 'Second character';
 			const character3 = 'Third character';
-			const scene = Scene()({
+			const scene = Scene({
 				question: 'Question',
 				frame: 'Frame',
 				requiredCharacters: [character1, character2],
@@ -94,7 +96,7 @@ describe('Scene', function() {
 	context('freeCharacter', function() {
 
 		it('should remove the freed character from the required characters when it was required on the Scene', function() {
-			const scene = Scene()({
+			const scene = Scene({
 				question: 'Question',
 				frame: 'Frame',
 				requiredCharacters: ['First required character', 'Second required character'],
@@ -103,7 +105,8 @@ describe('Scene', function() {
 				tone: Tone.Light
 			});
 			const result = scene.freeCharacter('First required character');
-			result.should.deep.equal(Scene(scene.id)({
+			result.should.deep.equal(Scene({
+				id: scene.id,
 				question: 'Question',
 				frame: 'Frame',
 				requiredCharacters: ['Second required character'],
@@ -116,7 +119,7 @@ describe('Scene', function() {
 		it('should leave the required characters when the freed character was not required on the Scene', function() {
 			const character1 = 'First character';
 			const character2 = 'Second character';
-			const scene = Scene()({
+			const scene = Scene({
 				question: 'Question',
 				frame: 'Frame',
 				requiredCharacters: [character1, character2],
@@ -125,7 +128,8 @@ describe('Scene', function() {
 				tone: Tone.Light
 			});
 			const result = scene.freeCharacter('Third character');
-			result.should.deep.equal(Scene(scene.id)({
+			result.should.deep.equal(Scene({
+				id: scene.id,
 				question: 'Question',
 				frame: 'Frame',
 				requiredCharacters: [character1, character2],
@@ -140,7 +144,7 @@ describe('Scene', function() {
 	context('forbidCharacter', function() {
 
 		it('should have the forbidden character when there was none in the Scene', function() {
-			const scene = Scene()({
+			const scene = Scene({
 				question: 'Question',
 				frame: 'Frame',
 				requiredCharacters: ['Required character'],
@@ -149,7 +153,8 @@ describe('Scene', function() {
 				tone: Tone.Light
 			});
 			const result = scene.forbidCharacter('Forbidden character');
-			result.should.deep.equal(Scene(scene.id)({
+			result.should.deep.equal(Scene({
+				id: scene.id,
 				question: 'Question',
 				frame: 'Frame',
 				requiredCharacters: ['Required character'],
@@ -160,7 +165,7 @@ describe('Scene', function() {
 		});
 
 		it('should have the forbidden character when there was already one in the Scene', function() {
-			const scene = Scene()({
+			const scene = Scene({
 				question: 'Question',
 				frame: 'Frame',
 				requiredCharacters: ['Required character'],
@@ -169,7 +174,8 @@ describe('Scene', function() {
 				tone: Tone.Light
 			});
 			const result = scene.forbidCharacter('Second forbidden character');
-			result.should.deep.equal(Scene(scene.id)({
+			result.should.deep.equal(Scene({
+				id: scene.id,
 				question: 'Question',
 				frame: 'Frame',
 				requiredCharacters: ['Required character'],
@@ -180,7 +186,7 @@ describe('Scene', function() {
 		});
 
 		it('should throw when there was already two forbidden characters in the Scene', function() {
-			const scene = Scene()({
+			const scene = Scene({
 				question: 'Question',
 				frame: 'Frame',
 				requiredCharacters: ['Required character'],
@@ -196,7 +202,7 @@ describe('Scene', function() {
 	context('allowCharacter', function() {
 
 		it('should remove the allowed character from the forbidden characters when it was forbidden on the Scene', function() {
-			const scene = Scene()({
+			const scene = Scene({
 				question: 'Question',
 				frame: 'Frame',
 				requiredCharacters: ['Required character'],
@@ -205,7 +211,8 @@ describe('Scene', function() {
 				tone: Tone.Light
 			});
 			const result = scene.allowCharacter('First forbidden character');
-			result.should.deep.equal(Scene(scene.id)({
+			result.should.deep.equal(Scene({
+				id: scene.id,
 				question: 'Question',
 				frame: 'Frame',
 				requiredCharacters: ['Required character'],
@@ -220,7 +227,7 @@ describe('Scene', function() {
 	context('setupFrame', function() {
 
 		it('should setup the frame of a Scene when there was none', function() {
-			const scene = Scene()({
+			const scene = Scene({
 				question: 'Question',
 				requiredCharacters: ['Required character'],
 				forbiddenCharacters: ['Forbidden character'],
@@ -228,7 +235,8 @@ describe('Scene', function() {
 				tone: Tone.Light
 			});
 			const result = scene.setupFrame('Frame description');
-			result.should.deep.equal(Scene(scene.id)({
+			result.should.deep.equal(Scene({
+				id: scene.id,
 				question: 'Question',
 				frame: 'Frame description',
 				requiredCharacters: ['Required character'],
@@ -239,7 +247,7 @@ describe('Scene', function() {
 		});
 
 		it('should setup the frame of a Scene when there was already one', function() {
-			const scene = Scene()({
+			const scene = Scene({
 				question: 'Question',
 				frame: 'Old frame',
 				requiredCharacters: ['Required character'],
@@ -248,7 +256,8 @@ describe('Scene', function() {
 				tone: Tone.Light
 			});
 			const result = scene.setupFrame('Frame description');
-			result.should.deep.equal(Scene(scene.id)({
+			result.should.deep.equal(Scene({
+				id: scene.id,
 				question: 'Question',
 				frame: 'Frame description',
 				requiredCharacters: ['Required character'],
@@ -263,7 +272,7 @@ describe('Scene', function() {
 	context('setAnswer', function() {
 
 		it('should set the answer to the question of a Scene when there was none', function() {
-			const scene = Scene()({
+			const scene = Scene({
 				question: 'Question',
 				frame: 'Frame',
 				requiredCharacters: ['Required character'],
@@ -271,7 +280,8 @@ describe('Scene', function() {
 				tone: Tone.Light
 			});
 			const result = scene.setAnswer('Answer');
-			result.should.deep.equal(Scene(scene.id)({
+			result.should.deep.equal(Scene({
+				id: scene.id,
 				question: 'Question',
 				frame: 'Frame',
 				requiredCharacters: ['Required character'],
@@ -282,7 +292,7 @@ describe('Scene', function() {
 		});
 
 		it('should set the answer to the question of a Scene when there was already one', function() {
-			const scene = Scene()({
+			const scene = Scene({
 				question: 'Question',
 				frame: 'Frame',
 				requiredCharacters: ['Required character'],
@@ -291,7 +301,8 @@ describe('Scene', function() {
 				tone: Tone.Light
 			});
 			const result = scene.setAnswer('New answer');
-			result.should.deep.equal(Scene(scene.id)({
+			result.should.deep.equal(Scene({
+				id: scene.id,
 				question: 'Question',
 				frame: 'Frame',
 				requiredCharacters: ['Required character'],
@@ -306,7 +317,7 @@ describe('Scene', function() {
 	context('setToneAsLight', function() {
 
 		it('should set the tone to Light', function() {
-			const scene = Scene()({
+			const scene = Scene({
 				question: 'Question',
 				frame: 'Frame',
 				requiredCharacters: ['Required character'],
@@ -315,7 +326,8 @@ describe('Scene', function() {
 				tone: Tone.Dark
 			});
 			const result = scene.setToneAsLight();
-			result.should.deep.equal(Scene(scene.id)({
+			result.should.deep.equal(Scene({
+				id: scene.id,
 				question: 'Question',
 				frame: 'Frame',
 				requiredCharacters: ['Required character'],
@@ -330,7 +342,7 @@ describe('Scene', function() {
 	context('setToneAsDark', function() {
 
 		it('should set the tone to Dark', function() {
-			const scene = Scene()({
+			const scene = Scene({
 				question: 'Question',
 				frame: 'Frame',
 				requiredCharacters: ['Required character'],
@@ -339,7 +351,8 @@ describe('Scene', function() {
 				tone: Tone.Light
 			});
 			const result = scene.setToneAsDark();
-			result.should.deep.equal(Scene(scene.id)({
+			result.should.deep.equal(Scene({
+				id: scene.id,
 				question: 'Question',
 				frame: 'Frame',
 				requiredCharacters: ['Required character'],
@@ -363,7 +376,8 @@ describe('Scene', function() {
 				answer: 'Answer',
 				tone: 'Light'
 			});
-			scene.should.deep.equal(Scene('id')({
+			scene.should.deep.equal(Scene({
+				id: 'id',
 				question: 'Question',
 				frame: 'Frame',
 				requiredCharacters: ['Character 1', 'Character 2'],

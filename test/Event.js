@@ -10,23 +10,25 @@ describe('Event', function() {
 	context('setTitle', function() {
 
 		it('should set the title of the Event to the given one when there was none', function() {
-			const event = Event()({
+			const event = Event({
 				tone: Tone.Light
 			});
 			const result = event.setTitle('Title');
-			result.should.deep.equal(Event(event.id)({
+			result.should.deep.equal(Event({
+				id: event.id,
 				title: 'Title',
 				tone: Tone.Light
 			}));
 		});
 
 		it('should set the title of the Event to the given one when there was already one', function() {
-			const event = Event()({
+			const event = Event({
 				title: 'Title',
 				tone: Tone.Light
 			});
 			const result = event.setTitle('New title');
-			result.should.deep.equal(Event(event.id)({
+			result.should.deep.equal(Event({
+				id: event.id,
 				title: 'New title',
 				tone: Tone.Light
 			}));
@@ -37,12 +39,13 @@ describe('Event', function() {
 	context('setToneAsLight', function() {
 
 		it('should set the tone to Light', function() {
-			const event = Event()({
+			const event = Event({
 				title: 'Title',
 				tone: Tone.Dark
 			});
 			const result = event.setToneAsLight();
-			result.should.deep.equal(Event(event.id)({
+			result.should.deep.equal(Event({
+				id: event.id,
 				title: 'Title',
 				tone: Tone.Light
 			}));
@@ -53,12 +56,13 @@ describe('Event', function() {
 	context('setToneAsDark', function() {
 
 		it('should set the tone to Dark', function() {
-			const event = Event()({
+			const event = Event({
 				title: 'Title',
 				tone: Tone.Light
 			});
 			const result = event.setToneAsDark();
-			result.should.deep.equal(Event(event.id)({
+			result.should.deep.equal(Event({
+				id: event.id,
 				title: 'Title',
 				tone: Tone.Dark
 			}));
@@ -69,15 +73,16 @@ describe('Event', function() {
 	context('addScene', function() {
 
 		it('should add a Scene when there were none', function() {
-			const event = Event()({
+			const event = Event({
 				title: 'Title',
 				tone: Tone.Light
 			});
-			const scene = Scene()();
+			const scene = Scene();
 			const result = event.addScene({
 				scene: scene
 			});
-			result.should.deep.equal(Event(event.id)({
+			result.should.deep.equal(Event({
+				id: event.id,
 				title: 'Title',
 				tone: Tone.Light,
 				scenes: [scene]
@@ -85,17 +90,18 @@ describe('Event', function() {
 		});
 
 		it('should append a Scene when there was already one', function() {
-			const scene = Scene()();
-			const event = Event()({
+			const scene = Scene();
+			const event = Event({
 				title: 'Title',
 				tone: Tone.Light,
 				scenes: [scene]
 			});
-			const newScene = Scene()();
+			const newScene = Scene();
 			const result = event.addScene({
 				scene: newScene
 			});
-			result.should.deep.equal(Event(event.id)({
+			result.should.deep.equal(Event({
+				id: event.id,
 				title: 'Title',
 				tone: Tone.Light,
 				scenes: [scene, newScene]
@@ -103,20 +109,21 @@ describe('Event', function() {
 		});
 
 		it('should insert a Scene before the one with the specified ID when there is a corresponding one', function() {
-			const scene1 = Scene()();
-			const scene2 = Scene()();
-			const scene3 = Scene()();
-			const event = Event()({
+			const scene1 = Scene();
+			const scene2 = Scene();
+			const scene3 = Scene();
+			const event = Event({
 				title: 'Title',
 				tone: Tone.Light,
 				scenes: [scene1, scene2, scene3]
 			});
-			const newScene = Scene()();
+			const newScene = Scene();
 			const result = event.addScene({
 				scene: newScene,
 				before: scene2.id
 			});
-			result.should.deep.equal(Event(event.id)({
+			result.should.deep.equal(Event({
+				id: event.id,
 				title: 'Title',
 				tone: Tone.Light,
 				scenes: [scene1, newScene, scene2, scene3]
@@ -124,16 +131,16 @@ describe('Event', function() {
 		});
 
 		it('should throw when adding a Scene before the one with the specified ID when there is no corresponding one', function() {
-			const scene1 = Scene()();
-			const scene2 = Scene()();
-			const scene3 = Scene()();
+			const scene1 = Scene();
+			const scene2 = Scene();
+			const scene3 = Scene();
 			const sceneId = uuid();
-			const event = Event()({
+			const event = Event({
 				title: 'Title',
 				tone: Tone.Light,
 				scenes: [scene1, scene2, scene3]
 			});
-			const newScene = Scene()();
+			const newScene = Scene();
 			(() => event.addScene({
 				scene: newScene,
 				before: sceneId
@@ -150,7 +157,8 @@ describe('Event', function() {
 				title: 'Title',
 				tone: 'Light'
 			});
-			event.should.deep.equal(Event('id')({
+			event.should.deep.equal(Event({
+				id: 'id',
 				title: 'Title',
 				tone: Tone.Light
 			}));

@@ -1,9 +1,8 @@
 const Tone = require('Tone/Tone');
 const uuid = require('uuid/v4');
 
-const Scene = (
-	id = uuid()
-) => ({
+const Scene =  ({
+	id = uuid(),
 	question = 'The question',
 	frame = '',
 	requiredCharacters = [],
@@ -24,7 +23,8 @@ const Scene = (
 	const def = require('helper/ImmutableObject').defineMethod(scene);
 
 	def('setQuestion', (question) => {
-		return Scene(id)({
+		return Scene({
+			id: id,
 			question: question,
 			frame: frame,
 			requiredCharacters: requiredCharacters,
@@ -36,7 +36,8 @@ const Scene = (
 
 	def('requireCharacter', (requiredCharacter) => {
 		if(requiredCharacters.length < 2) {
-			return Scene(id)({
+			return Scene({
+				id: id,
 				question: question,
 				frame: frame,
 				requiredCharacters: requiredCharacters.concat([requiredCharacter]),
@@ -51,7 +52,8 @@ const Scene = (
 	});
 
 	def('freeCharacter', (freedCharacter) => {
-		return Scene(id)({
+		return Scene({
+			id: id,
 			question: question,
 			frame: frame,
 			requiredCharacters: requiredCharacters.filter((character) => character !== freedCharacter),
@@ -63,7 +65,8 @@ const Scene = (
 
 	def('forbidCharacter', (forbiddenCharacter) => {
 		if(forbiddenCharacters.length < 2) {
-			return Scene(id)({
+			return Scene({
+				id: id,
 				question: question,
 				frame: frame,
 				requiredCharacters: requiredCharacters,
@@ -78,7 +81,8 @@ const Scene = (
 	});
 
 	def('allowCharacter', (allowedCharacter) => {
-		return Scene(id)({
+		return Scene({
+			id: id,
 			question: question,
 			frame: frame,
 			requiredCharacters: requiredCharacters,
@@ -89,7 +93,8 @@ const Scene = (
 	});
 
 	def('setupFrame', (frame) => {
-		return Scene(id)({
+		return Scene({
+			id: id,
 			question: question,
 			frame: frame,
 			requiredCharacters: requiredCharacters,
@@ -100,7 +105,8 @@ const Scene = (
 	});
 
 	def('setAnswer', (answer) => {
-		return Scene(id)({
+		return Scene({
+			id: id,
 			question: question,
 			frame: frame,
 			requiredCharacters: requiredCharacters,
@@ -111,7 +117,8 @@ const Scene = (
 	});
 
 	def('setToneAsLight', () => {
-		return Scene(id)({
+		return Scene({
+			id: id,
 			question: question,
 			frame: frame,
 			requiredCharacters: requiredCharacters,
@@ -122,7 +129,8 @@ const Scene = (
 	});
 
 	def('setToneAsDark', () => {
-		return Scene(id)({
+		return Scene({
+			id: id,
 			question: question,
 			frame: frame,
 			requiredCharacters: requiredCharacters,
@@ -136,7 +144,8 @@ const Scene = (
 }
 
 Scene.fromJSON = (json) => {
-	return Scene(json.id)({
+	return Scene({
+		id: json.id,
 		question: json.question,
 		frame: json.frame,
 		requiredCharacters: json.requiredCharacters.slice(),
