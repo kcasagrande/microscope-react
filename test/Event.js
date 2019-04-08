@@ -1,6 +1,6 @@
 const should = require('chai').should();
 const Event = require('Event/Event');
-const Scene = require('Scene/Scene');
+const PlayedScene = require('Scene/PlayedScene');
 const Tone = require('Tone/Tone');
 const uuid = require('uuid/v4');
 const NoSceneWithId = require('Scene/NoSceneWithId');
@@ -77,7 +77,7 @@ describe('Event', function() {
 				title: 'Title',
 				tone: Tone.Light
 			});
-			const scene = Scene();
+			const scene = PlayedScene();
 			const result = event.addScene({
 				scene: scene
 			});
@@ -90,13 +90,13 @@ describe('Event', function() {
 		});
 
 		it('should append a Scene when there was already one', function() {
-			const scene = Scene();
+			const scene = PlayedScene();
 			const event = Event({
 				title: 'Title',
 				tone: Tone.Light,
 				scenes: [scene]
 			});
-			const newScene = Scene();
+			const newScene = PlayedScene();
 			const result = event.addScene({
 				scene: newScene
 			});
@@ -109,15 +109,15 @@ describe('Event', function() {
 		});
 
 		it('should insert a Scene before the one with the specified ID when there is a corresponding one', function() {
-			const scene1 = Scene();
-			const scene2 = Scene();
-			const scene3 = Scene();
+			const scene1 = PlayedScene();
+			const scene2 = PlayedScene();
+			const scene3 = PlayedScene();
 			const event = Event({
 				title: 'Title',
 				tone: Tone.Light,
 				scenes: [scene1, scene2, scene3]
 			});
-			const newScene = Scene();
+			const newScene = PlayedScene();
 			const result = event.addScene({
 				scene: newScene,
 				before: scene2.id
@@ -131,16 +131,16 @@ describe('Event', function() {
 		});
 
 		it('should throw when adding a Scene before the one with the specified ID when there is no corresponding one', function() {
-			const scene1 = Scene();
-			const scene2 = Scene();
-			const scene3 = Scene();
+			const scene1 = PlayedScene();
+			const scene2 = PlayedScene();
+			const scene3 = PlayedScene();
 			const sceneId = uuid();
 			const event = Event({
 				title: 'Title',
 				tone: Tone.Light,
 				scenes: [scene1, scene2, scene3]
 			});
-			const newScene = Scene();
+			const newScene = PlayedScene();
 			(() => event.addScene({
 				scene: newScene,
 				before: sceneId
@@ -152,8 +152,8 @@ describe('Event', function() {
 	describe('fromJSON', function() {
 
 		it('should parse a correct JSON', function() {
-			const scene1 = Scene();
-			const scene2 = Scene();
+			const scene1 = PlayedScene();
+			const scene2 = PlayedScene();
 			const event = Event.fromJSON({
 				id: 'id',
 				title: 'Title',

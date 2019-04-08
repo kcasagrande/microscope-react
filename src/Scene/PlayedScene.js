@@ -1,10 +1,10 @@
 const Tone = require('Tone/Tone');
 const uuid = require('uuid/v4');
 
-const Scene = ({
+const PlayedScene = ({
 	id = uuid(),
 	question = 'The question',
-	frame = '',
+	stage = '',
 	requiredCharacters = [],
 	forbiddenCharacters = [],
 	answer = '',
@@ -13,7 +13,7 @@ const Scene = ({
 	const scene = {
 		id: id,
 		question: question,
-		frame: frame,
+		stage: stage,
 		requiredCharacters: requiredCharacters,
 		forbiddenCharacters: forbiddenCharacters,
 		answer: answer,
@@ -23,10 +23,10 @@ const Scene = ({
 	const def = require('helper/ImmutableObject').defineMethod(scene);
 
 	def('setQuestion', (question) => {
-		return Scene({
+		return PlayedScene({
 			id: id,
 			question: question,
-			frame: frame,
+			stage: stage,
 			requiredCharacters: requiredCharacters,
 			forbiddenCharacters: forbiddenCharacters,
 			answer: answer,
@@ -36,10 +36,10 @@ const Scene = ({
 
 	def('requireCharacter', (requiredCharacter) => {
 		if(requiredCharacters.length < 2) {
-			return Scene({
+			return PlayedScene({
 				id: id,
 				question: question,
-				frame: frame,
+				stage: stage,
 				requiredCharacters: requiredCharacters.concat([requiredCharacter]),
 				forbiddenCharacters: forbiddenCharacters,
 				answer: answer,
@@ -52,10 +52,10 @@ const Scene = ({
 	});
 
 	def('freeCharacter', (freedCharacter) => {
-		return Scene({
+		return PlayedScene({
 			id: id,
 			question: question,
-			frame: frame,
+			stage: stage,
 			requiredCharacters: requiredCharacters.filter((character) => character !== freedCharacter),
 			forbiddenCharacters: forbiddenCharacters,
 			answer: answer,
@@ -65,10 +65,10 @@ const Scene = ({
 
 	def('forbidCharacter', (forbiddenCharacter) => {
 		if(forbiddenCharacters.length < 2) {
-			return Scene({
+			return PlayedScene({
 				id: id,
 				question: question,
-				frame: frame,
+				stage: stage,
 				requiredCharacters: requiredCharacters,
 				forbiddenCharacters: forbiddenCharacters.concat([forbiddenCharacter]),
 				answer: answer,
@@ -81,10 +81,10 @@ const Scene = ({
 	});
 
 	def('allowCharacter', (allowedCharacter) => {
-		return Scene({
+		return PlayedScene({
 			id: id,
 			question: question,
-			frame: frame,
+			stage: stage,
 			requiredCharacters: requiredCharacters,
 			forbiddenCharacters: forbiddenCharacters.filter((character) => character !== allowedCharacter),
 			answer: answer,
@@ -92,11 +92,11 @@ const Scene = ({
 		});
 	});
 
-	def('setupFrame', (frame) => {
-		return Scene({
+	def('setStage', (stage) => {
+		return PlayedScene({
 			id: id,
 			question: question,
-			frame: frame,
+			stage: stage,
 			requiredCharacters: requiredCharacters,
 			forbiddenCharacters: forbiddenCharacters,
 			answer: answer,
@@ -105,10 +105,10 @@ const Scene = ({
 	});
 
 	def('setAnswer', (answer) => {
-		return Scene({
+		return PlayedScene({
 			id: id,
 			question: question,
-			frame: frame,
+			stage: stage,
 			requiredCharacters: requiredCharacters,
 			forbiddenCharacters: forbiddenCharacters,
 			answer: answer,
@@ -117,10 +117,10 @@ const Scene = ({
 	});
 
 	def('setToneAsLight', () => {
-		return Scene({
+		return PlayedScene({
 			id: id,
 			question: question,
-			frame: frame,
+			stage: stage,
 			requiredCharacters: requiredCharacters,
 			forbiddenCharacters: forbiddenCharacters,
 			answer: answer,
@@ -129,10 +129,10 @@ const Scene = ({
 	});
 
 	def('setToneAsDark', () => {
-		return Scene({
+		return PlayedScene({
 			id: id,
 			question: question,
-			frame: frame,
+			stage: stage,
 			requiredCharacters: requiredCharacters,
 			forbiddenCharacters: forbiddenCharacters,
 			answer: answer,
@@ -144,7 +144,7 @@ const Scene = ({
 		return {
 			id: id,
 			question: question,
-			frame: frame,
+			stage: stage,
 			requiredCharacters: requiredCharacters,
 			forbiddenCharacters: forbiddenCharacters,
 			answer: answer,
@@ -155,11 +155,11 @@ const Scene = ({
 	return Object.freeze(scene);
 }
 
-Scene.fromJSON = (json) => {
-	return Scene({
+PlayedScene.fromJSON = (json) => {
+	return PlayedScene({
 		id: json.id,
 		question: json.question,
-		frame: json.frame,
+		stage: json.stage,
 		requiredCharacters: json.requiredCharacters.slice(),
 		forbiddenCharacters: json.forbiddenCharacters.slice(),
 		answer: json.answer,
@@ -167,4 +167,4 @@ Scene.fromJSON = (json) => {
 	});
 }
 
-module.exports = Scene;
+module.exports = PlayedScene;

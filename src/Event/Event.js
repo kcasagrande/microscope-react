@@ -1,5 +1,5 @@
 const Tone = require('Tone/Tone');
-const Scene = require('Scene/Scene');
+const PlayedScene = require('Scene/PlayedScene');
 const uuid = require('uuid/v4');
 require('helper/ImmutableArray')();
 const NoSceneWithId = require('Scene/NoSceneWithId');
@@ -47,7 +47,7 @@ const Event = ({
 	});
 
 	def('addScene', ({
-		scene = Scene(),
+		scene = PlayedScene(),
 		before = undefined
 	} = {}) => {
 		if(before) {
@@ -95,7 +95,7 @@ Event.fromJSON = (json) => {
 		id: json.id,
 		title: json.title,
 		tone: Tone.fromJSON(json.tone),
-		scenes: json.scenes.map(Scene.fromJSON)
+		scenes: json.scenes.map(PlayedScene.fromJSON)
 	});
 };
 
