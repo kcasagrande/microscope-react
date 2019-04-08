@@ -10,7 +10,7 @@ const Scene = (
 	forbiddenCharacters = [],
 	answer = '',
 	tone = Tone.Light
-}) => {
+} = {}) => {
 	const scene = {
 		id: id,
 		question: question,
