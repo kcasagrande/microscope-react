@@ -303,6 +303,54 @@ describe('Scene', function() {
 
 	});
 
+	context('setToneAsLight', function() {
+
+		it('should set the tone to Light', function() {
+			const scene = Scene()({
+				question: 'Question',
+				requiredCharacters: ['Required character'],
+				forbiddenCharacters: ['Forbidden character'],
+				frame: 'Frame',
+				answer: 'Answer',
+				tone: Tone.Dark
+			});
+			const result = scene.setToneAsLight();
+			result.should.deep.equal(Scene(scene.id)({
+				question: 'Question',
+				requiredCharacters: ['Required character'],
+				forbiddenCharacters: ['Forbidden character'],
+				frame: 'Frame',
+				answer: 'Answer',
+				tone: Tone.Light
+			}));
+		});
+
+	});
+
+	context('setToneAsDark', function() {
+
+		it('should set the tone to Dark', function() {
+			const scene = Scene()({
+				question: 'Question',
+				requiredCharacters: ['Required character'],
+				forbiddenCharacters: ['Forbidden character'],
+				frame: 'Frame',
+				answer: 'Answer',
+				tone: Tone.Light
+			});
+			const result = scene.setToneAsDark();
+			result.should.deep.equal(Scene(scene.id)({
+				question: 'Question',
+				requiredCharacters: ['Required character'],
+				forbiddenCharacters: ['Forbidden character'],
+				frame: 'Frame',
+				answer: 'Answer',
+				tone: Tone.Dark
+			}));
+		});
+
+	});
+
 	describe('fromJSON', function() {
 
 		it('should format to a correct JSON', function() {

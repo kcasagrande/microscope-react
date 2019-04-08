@@ -110,6 +110,28 @@ const Scene = (
 		});
 	});
 
+	def('setToneAsLight', () => {
+		return Scene(id)({
+			question: question,
+			requiredCharacters: requiredCharacters,
+			forbiddenCharacters: forbiddenCharacters,
+			frame: frame,
+			answer: answer,
+			tone: Tone.Light
+		});
+	});
+
+	def('setToneAsDark', () => {
+		return Scene(id)({
+			question: question,
+			requiredCharacters: requiredCharacters,
+			forbiddenCharacters: forbiddenCharacters,
+			frame: frame,
+			answer: answer,
+			tone: Tone.Dark
+		});
+	});
+
 	return Object.freeze(scene);
 }
 
