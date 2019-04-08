@@ -392,7 +392,7 @@ describe('Scene', function() {
 
 	context('fromJSON', function() {
 
-		it('should format to a correct JSON', function() {
+		it('should parse a correct JSON', function() {
 			const scene = Scene.fromJSON({
 				id: 'id',
 				question: 'Question',

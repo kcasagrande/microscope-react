@@ -151,16 +151,20 @@ describe('Event', function() {
 
 	describe('fromJSON', function() {
 
-		it('should format to a correct JSON', function() {
+		it('should parse a correct JSON', function() {
+			const scene1 = Scene();
+			const scene2 = Scene();
 			const event = Event.fromJSON({
 				id: 'id',
 				title: 'Title',
-				tone: 'Light'
+				tone: 'Light',
+				scenes: [scene1.toJSON(), scene2.toJSON()]
 			});
 			event.should.deep.equal(Event({
 				id: 'id',
 				title: 'Title',
-				tone: Tone.Light
+				tone: Tone.Light,
+				scenes: [scene1, scene2]
 			}));
 		});
 

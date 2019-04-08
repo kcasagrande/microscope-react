@@ -78,6 +78,15 @@ const Event = ({
 		}
 	});
 
+	def('toJSON', () => {
+		return {
+			id: id,
+			title: title,
+			tone: tone.toJSON(),
+			scenes: scenes.map((scene) => scene.toJSON())
+		};
+	});
+
 	return Object.freeze(event);
 };
 
@@ -85,7 +94,8 @@ Event.fromJSON = (json) => {
 	return Event({
 		id: json.id,
 		title: json.title,
-		tone: Tone.fromJSON(json.tone)
+		tone: Tone.fromJSON(json.tone),
+		scenes: json.scenes.map(Scene.fromJSON)
 	});
 };
 

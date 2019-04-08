@@ -149,18 +149,43 @@ describe('Period', function() {
 
 	});
 
-	describe('fromJSON', function() {
+	context('JSON', function() {
 
 		it('should format to a correct JSON', function() {
+			const event1 = Event();
+			const event2 = Event();
+			const period = Period({
+				id: 'id',
+				title: 'Title',
+				tone: Tone.Light,
+				events: [event1, event2]
+			});
+			period.toJSON().should.deep.equal({
+				id: 'id',
+				title: 'Title',
+				tone: 'Light',
+				events: [event1.toJSON(), event2.toJSON()]
+			});
+		});
+
+	});
+
+	context('fromJSON', function() {
+
+		it('should parse a correct JSON', function() {
+			const event1 = Event();
+			const event2 = Event();
 			const period = Period.fromJSON({
 				id: 'id',
 				title: 'Title',
-				tone: 'Light'
+				tone: 'Light',
+				events: [event1.toJSON(), event2.toJSON()]
 			});
 			period.should.deep.equal(Period({
 				id: 'id',
 				title: 'Title',
-				tone: Tone.Light
+				tone: Tone.Light,
+				events: [event1, event2]
 			}));
 		});
 

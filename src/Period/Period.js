@@ -78,6 +78,15 @@ const Period = ({
 		}
 	});
 
+	def('toJSON', () => {
+		return {
+			id: id,
+			title: title,
+			tone: tone.toJSON(),
+			events: events.map((event) => event.toJSON())
+		};
+	});
+
 	return Object.freeze(period);
 };
 
@@ -85,7 +94,8 @@ Period.fromJSON = (json) => {
 	return Period({
 		id: json.id,
 		title: json.title,
-		tone: Tone.fromJSON(json.tone)
+		tone: Tone.fromJSON(json.tone),
+		events: json.events.map(Event.fromJSON)
 	});
 };
 
