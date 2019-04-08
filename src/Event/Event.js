@@ -3,60 +3,59 @@ const PlayedScene = require('Scene/PlayedScene');
 const uuid = require('uuid/v4');
 require('helper/ImmutableArray')();
 const NoSceneWithId = require('Scene/NoSceneWithId');
+const ImmutableObject = require('helper/ImmutableObject');
 
-const Event = ({
-	id = uuid(),
-	title = '',
-	tone = Tone.Light,
-	scenes = []
-} = {}) => {
-	const event = {
-		id: id,
-		title: title,
-		tone: tone,
-		scenes: scenes
+class Event {
+	constructor({
+		id = uuid(),
+		title = '',
+		tone = Tone.Light,
+		scenes = []
+	} = {}) {
+		ImmutableObject.defineProperty(this)('id', id);
+		ImmutableObject.defineProperty(this)('title', title);
+		ImmutableObject.defineProperty(this)('tone', tone);
+		ImmutableObject.defineProperty(this)('scenes', scenes);
 	}
 
-	const def = require('helper/ImmutableObject').defineMethod(event);
-
-	def('setTitle', (title) => {
-		return Event({
-			id: id,
+	setTitle(title) {
+		return new Event({
+			id: this.id,
 			title: title,
-			tone: tone,
-			scenes: scenes
+			tone: this.tone,
+			scenes: this.scenes
 		});
-	});
+	}
 
-	def('setToneAsLight', () => {
-		return Event({
-			id: id,
-			title: title,
+	setToneAsLight() {
+		return new Event({
+			id: this.id,
+			title: this.title,
 			tone: Tone.Light,
-			scenes: scenes
+			scenes: this.scenes
 		});
-	});
+	}
 
-	def('setToneAsDark', () => {
-		return Event({
-			id: id,
-			title: title,
+	setToneAsDark() {
+		return new Event({
+			id: this.id,
+			title: this.title,
 			tone: Tone.Dark,
-			scenes: scenes
+			scenes: this.scenes
 		});
-	});
+	}
 
-	def('addScene', ({
-		scene = PlayedScene(),
+	addScene({
+		scene = new PlayedScene(),
 		before = undefined
-	} = {}) => {
+	} = {}) {
 		if(before) {
 			try {
-				return Event({
-					id: id,
-					title: title,
-					tone: tone,
-					scenes: scenes.insertBefore(((scene) => scene.id === before), [scene])
+				return new Event({
+					id: this.id,
+					title: this.title,
+					tone: this.tone,
+					scenes: this.scenes.insertBefore(((scene) => scene.id === before), [scene])
 				});
 			}
 			catch(error) {
@@ -69,34 +68,33 @@ const Event = ({
 			}
 		}
 		else {
-			return Event({
-				id: id,
-				title: title,
-				tone: tone,
-				scenes: scenes.concat([scene])
+			return new Event({
+				id: this.id,
+				title: this.title,
+				tone: this.tone,
+				scenes: this.scenes.concat([scene])
 			});
 		}
-	});
+	}
 
-	def('toJSON', () => {
+	toJSON() {
 		return {
-			id: id,
-			title: title,
-			tone: tone.toJSON(),
-			scenes: scenes.map((scene) => scene.toJSON())
+			id: this.id,
+			title: this.title,
+			tone: this.tone.toJSON(),
+			scenes: this.scenes.map((scene) => scene.toJSON())
 		};
-	});
+	}
 
-	return Object.freeze(event);
-};
+	static fromJSON(json) {
+		return new Event({
+			id: json.id,
+			title: json.title,
+			tone: Tone.fromJSON(json.tone),
+			scenes: json.scenes.map(PlayedScene.fromJSON)
+		});
+	}
 
-Event.fromJSON = (json) => {
-	return Event({
-		id: json.id,
-		title: json.title,
-		tone: Tone.fromJSON(json.tone),
-		scenes: json.scenes.map(PlayedScene.fromJSON)
-	});
-};
+}
 
 module.exports = Event;

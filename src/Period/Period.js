@@ -3,60 +3,59 @@ const Event = require('Event/Event');
 const uuid = require('uuid/v4');
 require('helper/ImmutableArray')();
 const NoEventWithId = require('Event/NoEventWithId');
+const ImmutableObject = require('helper/ImmutableObject');
 
-const Period = ({
-	id = uuid(),
-	title = '',
-	tone = Tone.Light,
-	events = []
-} = {}) => {
-	const period = {
-		id: id,
-		title: title,
-		tone: tone,
-		events: events
+class Period {
+	constructor({
+		id = uuid(),
+		title = '',
+		tone = Tone.Light,
+		events = []
+	} = {}) {
+		ImmutableObject.defineProperty(this)('id', id);
+		ImmutableObject.defineProperty(this)('title', title);
+		ImmutableObject.defineProperty(this)('tone', tone);
+		ImmutableObject.defineProperty(this)('events', events);
 	}
 
-	const def = require('helper/ImmutableObject').defineMethod(period);
-
-	def('setTitle', (title) => {
-		return Period({
-			id: id,
+	setTitle(title) {
+		return new Period({
+			id: this.id,
 			title: title,
-			tone: tone,
-			events: events
+			tone: this.tone,
+			events: this.events
 		});
-	});
+	}
 
-	def('setToneAsLight', () => {
-		return Period({
-			id: id,
-			title: title,
+	setToneAsLight() {
+		return new Period({
+			id: this.id,
+			title: this.title,
 			tone: Tone.Light,
-			events: events
+			events: this.events
 		});
-	});
+	}
 
-	def('setToneAsDark', () => {
-		return Period({
-			id: id,
-			title: title,
+	setToneAsDark() {
+		return new Period({
+			id: this.id,
+			title: this.title,
 			tone: Tone.Dark,
-			events: events
+			events: this.events
 		});
-	});
+	}
 
-	def('addEvent', ({
-		event = Event(),
+	addEvent({
+		event = new Event(),
 		before = undefined
-	} = {}) => {
+	} = {}) {
 		if(before) {
 			try {
-				return Period({
-					id: id,
-					title: title,
-					tone: tone,
-					events: events.insertBefore(((event) => event.id === before), [event])
+				return new Period({
+					id: this.id,
+					title: this.title,
+					tone: this.tone,
+					events: this.events.insertBefore(((event) => event.id === before), [event])
 				});
 			}
 			catch(error) {
@@ -69,34 +68,33 @@ const Period = ({
 			}
 		}
 		else {
-			return Period({
-				id: id,
-				title: title,
-				tone: tone,
-				events: events.concat([event])
+			return new Period({
+				id: this.id,
+				title: this.title,
+				tone: this.tone,
+				events: this.events.concat([event])
 			});
 		}
-	});
+	}
 
-	def('toJSON', () => {
+	toJSON() {
 		return {
-			id: id,
-			title: title,
-			tone: tone.toJSON(),
-			events: events.map((event) => event.toJSON())
+			id: this.id,
+			title: this.title,
+			tone: this.tone.toJSON(),
+			events: this.events.map((event) => event.toJSON())
 		};
-	});
+	}
 
-	return Object.freeze(period);
-};
+	static fromJSON(json) {
+		return new Period({
+			id: json.id,
+			title: json.title,
+			tone: Tone.fromJSON(json.tone),
+			events: json.events.map(Event.fromJSON)
+		});
+	}
 
-Period.fromJSON = (json) => {
-	return Period({
-		id: json.id,
-		title: json.title,
-		tone: Tone.fromJSON(json.tone),
-		events: json.events.map(Event.fromJSON)
-	});
 };
 
 module.exports = Period;

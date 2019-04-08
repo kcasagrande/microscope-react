@@ -1,170 +1,172 @@
 const Tone = require('Tone/Tone');
+const Scene = require('Scene/Scene');
 const uuid = require('uuid/v4');
+const ImmutableObject = require('helper/ImmutableObject');
 
-const PlayedScene = ({
-	id = uuid(),
-	question = 'The question',
-	stage = '',
-	requiredCharacters = [],
-	forbiddenCharacters = [],
-	answer = '',
-	tone = Tone.Light
-} = {}) => {
-	const scene = {
-		id: id,
-		question: question,
-		stage: stage,
-		requiredCharacters: requiredCharacters,
-		forbiddenCharacters: forbiddenCharacters,
-		answer: answer,
-		tone: tone
-	};
-
-	const def = require('helper/ImmutableObject').defineMethod(scene);
-
-	def('setQuestion', (question) => {
-		return PlayedScene({
+class PlayedScene extends Scene {
+	constructor({
+		id = uuid(),
+		question = 'The question',
+		stage = '',
+		requiredCharacters = [],
+		forbiddenCharacters = [],
+		answer = '',
+		tone = Tone.Light
+	} = {}) {
+		super({
 			id: id,
 			question: question,
-			stage: stage,
-			requiredCharacters: requiredCharacters,
-			forbiddenCharacters: forbiddenCharacters,
 			answer: answer,
 			tone: tone
 		});
-	});
 
-	def('requireCharacter', (requiredCharacter) => {
-		if(requiredCharacters.length < 2) {
-			return PlayedScene({
-				id: id,
-				question: question,
-				stage: stage,
-				requiredCharacters: requiredCharacters.concat([requiredCharacter]),
-				forbiddenCharacters: forbiddenCharacters,
-				answer: answer,
-				tone: tone
+		ImmutableObject.defineProperty(this)('stage', stage);
+		ImmutableObject.defineProperty(this)('requiredCharacters', requiredCharacters);
+		ImmutableObject.defineProperty(this)('forbiddenCharacters', forbiddenCharacters);
+	}
+
+	setQuestion(question) {
+		return new PlayedScene({
+			id: this.id,
+			question: question,
+			stage: this.stage,
+			requiredCharacters: this.requiredCharacters,
+			forbiddenCharacters: this.forbiddenCharacters,
+			answer: this.answer,
+			tone: this.tone
+		});
+	}
+
+	requireCharacter(requiredCharacter) {
+		if(this.requiredCharacters.length < 2) {
+			return new PlayedScene({
+				id: this.id,
+				question: this.question,
+				stage: this.stage,
+				requiredCharacters: this.requiredCharacters.concat([requiredCharacter]),
+				forbiddenCharacters: this.forbiddenCharacters,
+				answer: this.answer,
+				tone: this.tone
 			});
 		}
 		else {
 			throw Error('Can\'t have more than two required characters');
 		}
-	});
+	}
 
-	def('freeCharacter', (freedCharacter) => {
-		return PlayedScene({
-			id: id,
-			question: question,
-			stage: stage,
-			requiredCharacters: requiredCharacters.filter((character) => character !== freedCharacter),
-			forbiddenCharacters: forbiddenCharacters,
-			answer: answer,
-			tone: tone
+	freeCharacter(freedCharacter) {
+		return new PlayedScene({
+			id: this.id,
+			question: this.question,
+			stage: this.stage,
+			requiredCharacters: this.requiredCharacters.filter((character) => character !== freedCharacter),
+			forbiddenCharacters: this.forbiddenCharacters,
+			answer: this.answer,
+			tone: this.tone
 		});
-	});
+	}
 
-	def('forbidCharacter', (forbiddenCharacter) => {
-		if(forbiddenCharacters.length < 2) {
-			return PlayedScene({
-				id: id,
-				question: question,
-				stage: stage,
-				requiredCharacters: requiredCharacters,
-				forbiddenCharacters: forbiddenCharacters.concat([forbiddenCharacter]),
-				answer: answer,
-				tone: tone
+	forbidCharacter(forbiddenCharacter) {
+		if(this.forbiddenCharacters.length < 2) {
+			return new PlayedScene({
+				id: this.id,
+				question: this.question,
+				stage: this.stage,
+				requiredCharacters: this.requiredCharacters,
+				forbiddenCharacters: this.forbiddenCharacters.concat([forbiddenCharacter]),
+				answer: this.answer,
+				tone: this.tone
 			});
 		}
 		else {
 			throw Error('Can\'t have more than two forbidden characters');
 		}
-	});
+	}
 
-	def('allowCharacter', (allowedCharacter) => {
-		return PlayedScene({
-			id: id,
-			question: question,
-			stage: stage,
-			requiredCharacters: requiredCharacters,
-			forbiddenCharacters: forbiddenCharacters.filter((character) => character !== allowedCharacter),
-			answer: answer,
-			tone: tone
+	allowCharacter(allowedCharacter) {
+		return new PlayedScene({
+			id: this.id,
+			question: this.question,
+			stage: this.stage,
+			requiredCharacters: this.requiredCharacters,
+			forbiddenCharacters: this.forbiddenCharacters.filter((character) => character !== allowedCharacter),
+			answer: this.answer,
+			tone: this.tone
 		});
-	});
+	}
 
-	def('setStage', (stage) => {
-		return PlayedScene({
-			id: id,
-			question: question,
+	setStage(stage) {
+		return new PlayedScene({
+			id: this.id,
+			question: this.question,
 			stage: stage,
-			requiredCharacters: requiredCharacters,
-			forbiddenCharacters: forbiddenCharacters,
-			answer: answer,
-			tone: tone
+			requiredCharacters: this.requiredCharacters,
+			forbiddenCharacters: this.forbiddenCharacters,
+			answer: this.answer,
+			tone: this.tone
 		});
-	});
+	}
 
-	def('setAnswer', (answer) => {
-		return PlayedScene({
-			id: id,
-			question: question,
-			stage: stage,
-			requiredCharacters: requiredCharacters,
-			forbiddenCharacters: forbiddenCharacters,
+	setAnswer(answer) {
+		return new PlayedScene({
+			id: this.id,
+			question: this.question,
+			stage: this.stage,
+			requiredCharacters: this.requiredCharacters,
+			forbiddenCharacters: this.forbiddenCharacters,
 			answer: answer,
-			tone: tone
+			tone: this.tone
 		});
-	});
+	}
 
-	def('setToneAsLight', () => {
-		return PlayedScene({
-			id: id,
-			question: question,
-			stage: stage,
-			requiredCharacters: requiredCharacters,
-			forbiddenCharacters: forbiddenCharacters,
-			answer: answer,
+	setToneAsLight() {
+		return new PlayedScene({
+			id: this.id,
+			question: this.question,
+			stage: this.stage,
+			requiredCharacters: this.requiredCharacters,
+			forbiddenCharacters: this.forbiddenCharacters,
+			answer: this.answer,
 			tone: Tone.Light
 		});
-	});
+	}
 
-	def('setToneAsDark', () => {
-		return PlayedScene({
-			id: id,
-			question: question,
-			stage: stage,
-			requiredCharacters: requiredCharacters,
-			forbiddenCharacters: forbiddenCharacters,
-			answer: answer,
+	setToneAsDark() {
+		return new PlayedScene({
+			id: this.id,
+			question: this.question,
+			stage: this.stage,
+			requiredCharacters: this.requiredCharacters,
+			forbiddenCharacters: this.forbiddenCharacters,
+			answer: this.answer,
 			tone: Tone.Dark
 		});
-	});
+	}
 
-	def('toJSON', () => {
-		return {
-			id: id,
-			question: question,
-			stage: stage,
-			requiredCharacters: requiredCharacters,
-			forbiddenCharacters: forbiddenCharacters,
-			answer: answer,
-			tone: tone.toJSON()
-		};
-	});
+	toJSON() {
+		return Object.freeze({
+			id: this.id,
+			question: this.question,
+			stage: this.stage,
+			requiredCharacters: this.requiredCharacters,
+			forbiddenCharacters: this.forbiddenCharacters,
+			answer: this.answer,
+			tone: this.tone.toJSON()
+		});
+	}
 
-	return Object.freeze(scene);
+	static fromJSON(json) {
+		return new PlayedScene({
+			id: json.id,
+			question: json.question,
+			stage: json.stage,
+			requiredCharacters: json.requiredCharacters.slice(),
+			forbiddenCharacters: json.forbiddenCharacters.slice(),
+			answer: json.answer,
+			tone: Tone.fromJSON(json.tone)
+		});
+	}
 }
 
-PlayedScene.fromJSON = (json) => {
-	return PlayedScene({
-		id: json.id,
-		question: json.question,
-		stage: json.stage,
-		requiredCharacters: json.requiredCharacters.slice(),
-		forbiddenCharacters: json.forbiddenCharacters.slice(),
-		answer: json.answer,
-		tone: Tone.fromJSON(json.tone)
-	});
-}
 
 module.exports = PlayedScene;

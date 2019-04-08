@@ -7,7 +7,7 @@ describe('PlayedScene', function() {
 	context('setQuestion', function() {
 
 		it('should set the question of the PlayedScene to the given question', function() {
-			const scene = PlayedScene({
+			const scene = new PlayedScene({
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Required character'],
@@ -16,7 +16,7 @@ describe('PlayedScene', function() {
 				tone: Tone.Light
 			});
 			const result = scene.setQuestion('New question');
-			result.should.deep.equal(PlayedScene({
+			result.should.deep.equal(new PlayedScene({
 				id: scene.id,
 				question: 'New question',
 				stage: 'Stage',
@@ -33,7 +33,7 @@ describe('PlayedScene', function() {
 
 		it('should have the required character after requiring a character on a PlayedScene where there was none', function() {
 			const character = 'First character';
-			const scene = PlayedScene({
+			const scene = new PlayedScene({
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: [],
@@ -42,7 +42,7 @@ describe('PlayedScene', function() {
 				tone: Tone.Light
 			});
 			const result = scene.requireCharacter(character);
-			result.should.deep.equal(PlayedScene({
+			result.should.deep.equal(new PlayedScene({
 				id: scene.id,
 				question: 'Question',
 				stage: 'Stage',
@@ -56,7 +56,7 @@ describe('PlayedScene', function() {
 		it('should have both required characters after requiring a character on a PlayedScene where there was one', function() {
 			const character1 = 'First character';
 			const character2 = 'Second character';
-			const scene = PlayedScene({
+			const scene = new PlayedScene({
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: [character1],
@@ -65,7 +65,7 @@ describe('PlayedScene', function() {
 				tone: Tone.Light
 			});
 			const result = scene.requireCharacter(character2);
-			result.should.deep.equal(PlayedScene({
+			result.should.deep.equal(new PlayedScene({
 				id: scene.id,
 				question: 'Question',
 				stage: 'Stage',
@@ -80,7 +80,7 @@ describe('PlayedScene', function() {
 			const character1 = 'First character';
 			const character2 = 'Second character';
 			const character3 = 'Third character';
-			const scene = PlayedScene({
+			const scene = new PlayedScene({
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: [character1, character2],
@@ -96,7 +96,7 @@ describe('PlayedScene', function() {
 	context('freeCharacter', function() {
 
 		it('should remove the freed character from the required characters when it was required on the PlayedScene', function() {
-			const scene = PlayedScene({
+			const scene = new PlayedScene({
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['First required character', 'Second required character'],
@@ -105,7 +105,7 @@ describe('PlayedScene', function() {
 				tone: Tone.Light
 			});
 			const result = scene.freeCharacter('First required character');
-			result.should.deep.equal(PlayedScene({
+			result.should.deep.equal(new PlayedScene({
 				id: scene.id,
 				question: 'Question',
 				stage: 'Stage',
@@ -119,7 +119,7 @@ describe('PlayedScene', function() {
 		it('should leave the required characters when the freed character was not required on the PlayedScene', function() {
 			const character1 = 'First character';
 			const character2 = 'Second character';
-			const scene = PlayedScene({
+			const scene = new PlayedScene({
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: [character1, character2],
@@ -128,7 +128,7 @@ describe('PlayedScene', function() {
 				tone: Tone.Light
 			});
 			const result = scene.freeCharacter('Third character');
-			result.should.deep.equal(PlayedScene({
+			result.should.deep.equal(new PlayedScene({
 				id: scene.id,
 				question: 'Question',
 				stage: 'Stage',
@@ -144,7 +144,7 @@ describe('PlayedScene', function() {
 	context('forbidCharacter', function() {
 
 		it('should have the forbidden character when there was none in the PlayedScene', function() {
-			const scene = PlayedScene({
+			const scene = new PlayedScene({
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Required character'],
@@ -153,7 +153,7 @@ describe('PlayedScene', function() {
 				tone: Tone.Light
 			});
 			const result = scene.forbidCharacter('Forbidden character');
-			result.should.deep.equal(PlayedScene({
+			result.should.deep.equal(new PlayedScene({
 				id: scene.id,
 				question: 'Question',
 				stage: 'Stage',
@@ -165,7 +165,7 @@ describe('PlayedScene', function() {
 		});
 
 		it('should have the forbidden character when there was already one in the PlayedScene', function() {
-			const scene = PlayedScene({
+			const scene = new PlayedScene({
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Required character'],
@@ -174,7 +174,7 @@ describe('PlayedScene', function() {
 				tone: Tone.Light
 			});
 			const result = scene.forbidCharacter('Second forbidden character');
-			result.should.deep.equal(PlayedScene({
+			result.should.deep.equal(new PlayedScene({
 				id: scene.id,
 				question: 'Question',
 				stage: 'Stage',
@@ -186,7 +186,7 @@ describe('PlayedScene', function() {
 		});
 
 		it('should throw when there was already two forbidden characters in the PlayedScene', function() {
-			const scene = PlayedScene({
+			const scene = new PlayedScene({
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Required character'],
@@ -202,7 +202,7 @@ describe('PlayedScene', function() {
 	context('allowCharacter', function() {
 
 		it('should remove the allowed character from the forbidden characters when it was forbidden on the PlayedScene', function() {
-			const scene = PlayedScene({
+			const scene = new PlayedScene({
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Required character'],
@@ -211,7 +211,7 @@ describe('PlayedScene', function() {
 				tone: Tone.Light
 			});
 			const result = scene.allowCharacter('First forbidden character');
-			result.should.deep.equal(PlayedScene({
+			result.should.deep.equal(new PlayedScene({
 				id: scene.id,
 				question: 'Question',
 				stage: 'Stage',
@@ -227,7 +227,7 @@ describe('PlayedScene', function() {
 	context('setStage', function() {
 
 		it('should setup the stage of a PlayedScene when there was none', function() {
-			const scene = PlayedScene({
+			const scene = new PlayedScene({
 				question: 'Question',
 				requiredCharacters: ['Required character'],
 				forbiddenCharacters: ['Forbidden character'],
@@ -235,7 +235,7 @@ describe('PlayedScene', function() {
 				tone: Tone.Light
 			});
 			const result = scene.setStage('Stage description');
-			result.should.deep.equal(PlayedScene({
+			result.should.deep.equal(new PlayedScene({
 				id: scene.id,
 				question: 'Question',
 				stage: 'Stage description',
@@ -247,7 +247,7 @@ describe('PlayedScene', function() {
 		});
 
 		it('should setup the stage of a PlayedScene when there was already one', function() {
-			const scene = PlayedScene({
+			const scene = new PlayedScene({
 				question: 'Question',
 				stage: 'Old stage',
 				requiredCharacters: ['Required character'],
@@ -256,7 +256,7 @@ describe('PlayedScene', function() {
 				tone: Tone.Light
 			});
 			const result = scene.setStage('Stage description');
-			result.should.deep.equal(PlayedScene({
+			result.should.deep.equal(new PlayedScene({
 				id: scene.id,
 				question: 'Question',
 				stage: 'Stage description',
@@ -272,7 +272,7 @@ describe('PlayedScene', function() {
 	context('setAnswer', function() {
 
 		it('should set the answer to the question of a PlayedScene when there was none', function() {
-			const scene = PlayedScene({
+			const scene = new PlayedScene({
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Required character'],
@@ -280,7 +280,7 @@ describe('PlayedScene', function() {
 				tone: Tone.Light
 			});
 			const result = scene.setAnswer('Answer');
-			result.should.deep.equal(PlayedScene({
+			result.should.deep.equal(new PlayedScene({
 				id: scene.id,
 				question: 'Question',
 				stage: 'Stage',
@@ -292,7 +292,7 @@ describe('PlayedScene', function() {
 		});
 
 		it('should set the answer to the question of a PlayedScene when there was already one', function() {
-			const scene = PlayedScene({
+			const scene = new PlayedScene({
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Required character'],
@@ -301,7 +301,7 @@ describe('PlayedScene', function() {
 				tone: Tone.Light
 			});
 			const result = scene.setAnswer('New answer');
-			result.should.deep.equal(PlayedScene({
+			result.should.deep.equal(new PlayedScene({
 				id: scene.id,
 				question: 'Question',
 				stage: 'Stage',
@@ -317,7 +317,7 @@ describe('PlayedScene', function() {
 	context('setToneAsLight', function() {
 
 		it('should set the tone to Light', function() {
-			const scene = PlayedScene({
+			const scene = new PlayedScene({
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Required character'],
@@ -326,7 +326,7 @@ describe('PlayedScene', function() {
 				tone: Tone.Dark
 			});
 			const result = scene.setToneAsLight();
-			result.should.deep.equal(PlayedScene({
+			result.should.deep.equal(new PlayedScene({
 				id: scene.id,
 				question: 'Question',
 				stage: 'Stage',
@@ -342,7 +342,7 @@ describe('PlayedScene', function() {
 	context('setToneAsDark', function() {
 
 		it('should set the tone to Dark', function() {
-			const scene = PlayedScene({
+			const scene = new PlayedScene({
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Required character'],
@@ -351,7 +351,7 @@ describe('PlayedScene', function() {
 				tone: Tone.Light
 			});
 			const result = scene.setToneAsDark();
-			result.should.deep.equal(PlayedScene({
+			result.should.deep.equal(new PlayedScene({
 				id: scene.id,
 				question: 'Question',
 				stage: 'Stage',
@@ -367,7 +367,7 @@ describe('PlayedScene', function() {
 	context('toJSON', function() {
 
 		it('should format to a correct JSON', function() {
-			const scene = PlayedScene({
+			const scene = new PlayedScene({
 				id: 'id',
 				question: 'Question',
 				stage: 'Stage',
@@ -402,7 +402,7 @@ describe('PlayedScene', function() {
 				answer: 'Answer',
 				tone: 'Light'
 			});
-			scene.should.deep.equal(PlayedScene({
+			scene.should.deep.equal(new PlayedScene({
 				id: 'id',
 				question: 'Question',
 				stage: 'Stage',
