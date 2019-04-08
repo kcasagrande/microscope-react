@@ -9,7 +9,7 @@ const Event = ({
 	title = '',
 	tone = Tone.Light,
 	scenes = []
-}) => {
+} = {}) => {
 	const event = {
 		id: id,
 		title: title,

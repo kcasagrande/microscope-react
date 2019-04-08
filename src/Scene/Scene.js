@@ -1,7 +1,7 @@
 const Tone = require('Tone/Tone');
 const uuid = require('uuid/v4');
 
-const Scene =  ({
+const Scene = ({
 	id = uuid(),
 	question = 'The question',
 	frame = '',
