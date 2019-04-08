@@ -364,7 +364,33 @@ describe('Scene', function() {
 
 	});
 
-	describe('fromJSON', function() {
+	context('toJSON', function() {
+
+		it('should format to a correct JSON', function() {
+			const scene = Scene({
+				id: 'id',
+				question: 'Question',
+				frame: 'Frame',
+				requiredCharacters: ['First required character', 'Second required character'],
+				forbiddenCharacters: ['First forbidden character', 'Second forbidden character'],
+				answer: 'Answer',
+				tone: Tone.Light
+			});
+			const result = scene.toJSON();
+			result.should.deep.equal({
+				id: 'id',
+				question: 'Question',
+				frame: 'Frame',
+				requiredCharacters: ['First required character', 'Second required character'],
+				forbiddenCharacters: ['First forbidden character', 'Second forbidden character'],
+				answer: 'Answer',
+				tone: Tone.Light.toJSON()
+			});
+		});
+
+	});
+
+	context('fromJSON', function() {
 
 		it('should format to a correct JSON', function() {
 			const scene = Scene.fromJSON({

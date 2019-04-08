@@ -140,6 +140,18 @@ const Scene = ({
 		});
 	});
 
+	def('toJSON', () => {
+		return {
+			id: id,
+			question: question,
+			frame: frame,
+			requiredCharacters: requiredCharacters,
+			forbiddenCharacters: forbiddenCharacters,
+			answer: answer,
+			tone: tone.toJSON()
+		};
+	});
+
 	return Object.freeze(scene);
 }
 
