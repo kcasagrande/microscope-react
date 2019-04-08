@@ -11,6 +11,14 @@ describe('Tone.Light', function() {
 
 	});
 
+	context('toJSON', function() {
+
+		it('should return \'Light\'', function() {
+			Tone.Light.toJSON().should.equal('Light');
+		});
+
+	});
+
 });
 
 describe('Tone.Dark', function() {
@@ -19,6 +27,14 @@ describe('Tone.Dark', function() {
 
 		it('should return Tone.Light', function() {
 			Tone.Dark.toggle().should.equal(Tone.Light);
+		});
+
+	});
+
+	context('toJSON', function() {
+
+		it('should return \'Dark\'', function() {
+			Tone.Dark.toJSON().should.equal('Dark');
 		});
 
 	});

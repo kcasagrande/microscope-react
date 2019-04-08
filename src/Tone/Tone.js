@@ -15,6 +15,15 @@ const Tone = (value) => {
 		}
 	});
 
+	def('toJSON', () => {
+		if(value === light) {
+			return 'Light';
+		}
+		else {
+			return 'Dark';
+		}
+	});
+
 	return Object.freeze(tone);
 }
 
@@ -26,12 +35,11 @@ module.exports = {
 	Dark: Tone.Dark,
 
 	fromJSON: (json) => {
-		switch(json) {
-			case 'Light':
-				return Tone.Light;
-				break;
-			default:
-				return Tone.Dark;
+		if(json === 'Light') {
+			return Tone.Light;
+		}
+		else {
+			return Tone.Dark;
 		}
 	}
 };
