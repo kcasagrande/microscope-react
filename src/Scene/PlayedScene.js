@@ -9,7 +9,7 @@ class PlayedScene extends Scene {
 		question = 'The question',
 		stage = '',
 		requiredCharacters = [],
-		forbiddenCharacters = [],
+		bannedCharacters = [],
 		answer = '',
 		tone = Tone.Light
 	} = {}) {
@@ -22,7 +22,7 @@ class PlayedScene extends Scene {
 
 		ImmutableObject.defineProperty(this)('stage', stage);
 		ImmutableObject.defineProperty(this)('requiredCharacters', requiredCharacters);
-		ImmutableObject.defineProperty(this)('forbiddenCharacters', forbiddenCharacters);
+		ImmutableObject.defineProperty(this)('bannedCharacters', bannedCharacters);
 	}
 
 	setQuestion(question) {
@@ -31,7 +31,7 @@ class PlayedScene extends Scene {
 			question: question,
 			stage: this.stage,
 			requiredCharacters: this.requiredCharacters,
-			forbiddenCharacters: this.forbiddenCharacters,
+			bannedCharacters: this.bannedCharacters,
 			answer: this.answer,
 			tone: this.tone
 		});
@@ -44,7 +44,7 @@ class PlayedScene extends Scene {
 				question: this.question,
 				stage: this.stage,
 				requiredCharacters: this.requiredCharacters.concat([requiredCharacter]),
-				forbiddenCharacters: this.forbiddenCharacters,
+				bannedCharacters: this.bannedCharacters,
 				answer: this.answer,
 				tone: this.tone
 			});
@@ -60,26 +60,26 @@ class PlayedScene extends Scene {
 			question: this.question,
 			stage: this.stage,
 			requiredCharacters: this.requiredCharacters.filter((character) => character !== freedCharacter),
-			forbiddenCharacters: this.forbiddenCharacters,
+			bannedCharacters: this.bannedCharacters,
 			answer: this.answer,
 			tone: this.tone
 		});
 	}
 
-	forbidCharacter(forbiddenCharacter) {
-		if(this.forbiddenCharacters.length < 2) {
+	banCharacter(bannedCharacter) {
+		if(this.bannedCharacters.length < 2) {
 			return new PlayedScene({
 				id: this.id,
 				question: this.question,
 				stage: this.stage,
 				requiredCharacters: this.requiredCharacters,
-				forbiddenCharacters: this.forbiddenCharacters.concat([forbiddenCharacter]),
+				bannedCharacters: this.bannedCharacters.concat([bannedCharacter]),
 				answer: this.answer,
 				tone: this.tone
 			});
 		}
 		else {
-			throw Error('Can\'t have more than two forbidden characters');
+			throw Error('Can\'t have more than two banned characters');
 		}
 	}
 
@@ -89,7 +89,7 @@ class PlayedScene extends Scene {
 			question: this.question,
 			stage: this.stage,
 			requiredCharacters: this.requiredCharacters,
-			forbiddenCharacters: this.forbiddenCharacters.filter((character) => character !== allowedCharacter),
+			bannedCharacters: this.bannedCharacters.filter((character) => character !== allowedCharacter),
 			answer: this.answer,
 			tone: this.tone
 		});
@@ -101,7 +101,7 @@ class PlayedScene extends Scene {
 			question: this.question,
 			stage: stage,
 			requiredCharacters: this.requiredCharacters,
-			forbiddenCharacters: this.forbiddenCharacters,
+			bannedCharacters: this.bannedCharacters,
 			answer: this.answer,
 			tone: this.tone
 		});
@@ -113,7 +113,7 @@ class PlayedScene extends Scene {
 			question: this.question,
 			stage: this.stage,
 			requiredCharacters: this.requiredCharacters,
-			forbiddenCharacters: this.forbiddenCharacters,
+			bannedCharacters: this.bannedCharacters,
 			answer: answer,
 			tone: this.tone
 		});
@@ -125,7 +125,7 @@ class PlayedScene extends Scene {
 			question: this.question,
 			stage: this.stage,
 			requiredCharacters: this.requiredCharacters,
-			forbiddenCharacters: this.forbiddenCharacters,
+			bannedCharacters: this.bannedCharacters,
 			answer: this.answer,
 			tone: Tone.Light
 		});
@@ -137,7 +137,7 @@ class PlayedScene extends Scene {
 			question: this.question,
 			stage: this.stage,
 			requiredCharacters: this.requiredCharacters,
-			forbiddenCharacters: this.forbiddenCharacters,
+			bannedCharacters: this.bannedCharacters,
 			answer: this.answer,
 			tone: Tone.Dark
 		});
@@ -149,7 +149,7 @@ class PlayedScene extends Scene {
 			question: this.question,
 			stage: this.stage,
 			requiredCharacters: this.requiredCharacters,
-			forbiddenCharacters: this.forbiddenCharacters,
+			bannedCharacters: this.bannedCharacters,
 			answer: this.answer,
 			tone: this.tone.toJSON()
 		});
@@ -161,7 +161,7 @@ class PlayedScene extends Scene {
 			question: json.question,
 			stage: json.stage,
 			requiredCharacters: json.requiredCharacters.slice(),
-			forbiddenCharacters: json.forbiddenCharacters.slice(),
+			bannedCharacters: json.bannedCharacters.slice(),
 			answer: json.answer,
 			tone: Tone.fromJSON(json.tone)
 		});

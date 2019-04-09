@@ -11,7 +11,7 @@ describe('PlayedScene', function() {
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Required character'],
-				forbiddenCharacters: ['Forbidden character'],
+				bannedCharacters: ['Banned character'],
 				answer: 'Answer',
 				tone: Tone.Light
 			});
@@ -21,7 +21,7 @@ describe('PlayedScene', function() {
 				question: 'New question',
 				stage: 'Stage',
 				requiredCharacters: ['Required character'],
-				forbiddenCharacters: ['Forbidden character'],
+				bannedCharacters: ['Banned character'],
 				answer: 'Answer',
 				tone: Tone.Light
 			}));
@@ -37,7 +37,7 @@ describe('PlayedScene', function() {
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: [],
-				forbiddenCharacters: ['Forbidden character'],
+				bannedCharacters: ['Banned character'],
 				answer: 'Answer',
 				tone: Tone.Light
 			});
@@ -47,7 +47,7 @@ describe('PlayedScene', function() {
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: [character],
-				forbiddenCharacters: ['Forbidden character'],
+				bannedCharacters: ['Banned character'],
 				answer: 'Answer',
 				tone: Tone.Light
 			}));
@@ -60,7 +60,7 @@ describe('PlayedScene', function() {
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: [character1],
-				forbiddenCharacters: ['Forbidden character'],
+				bannedCharacters: ['Banned character'],
 				answer: 'Answer',
 				tone: Tone.Light
 			});
@@ -70,7 +70,7 @@ describe('PlayedScene', function() {
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: [character1, character2],
-				forbiddenCharacters: ['Forbidden character'],
+				bannedCharacters: ['Banned character'],
 				answer: 'Answer',
 				tone: Tone.Light
 			}));
@@ -84,7 +84,7 @@ describe('PlayedScene', function() {
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: [character1, character2],
-				forbiddenCharacters: ['Forbidden character'],
+				bannedCharacters: ['Banned character'],
 				answer: 'Answer',
 				tone: Tone.Light
 			});
@@ -100,7 +100,7 @@ describe('PlayedScene', function() {
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['First required character', 'Second required character'],
-				forbiddenCharacters: ['Forbidden character'],
+				bannedCharacters: ['Banned character'],
 				answer: 'Answer',
 				tone: Tone.Light
 			});
@@ -110,7 +110,7 @@ describe('PlayedScene', function() {
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Second required character'],
-				forbiddenCharacters: ['Forbidden character'],
+				bannedCharacters: ['Banned character'],
 				answer: 'Answer',
 				tone: Tone.Light
 			}));
@@ -123,7 +123,7 @@ describe('PlayedScene', function() {
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: [character1, character2],
-				forbiddenCharacters: ['Forbidden character'],
+				bannedCharacters: ['Banned character'],
 				answer: 'Answer',
 				tone: Tone.Light
 			});
@@ -133,7 +133,7 @@ describe('PlayedScene', function() {
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: [character1, character2],
-				forbiddenCharacters: ['Forbidden character'],
+				bannedCharacters: ['Banned character'],
 				answer: 'Answer',
 				tone: Tone.Light
 			}));
@@ -141,82 +141,82 @@ describe('PlayedScene', function() {
 
 	});
 
-	context('forbidCharacter', function() {
+	context('banCharacter', function() {
 
-		it('should have the forbidden character when there was none in the PlayedScene', function() {
+		it('should have the banned character when there was none in the PlayedScene', function() {
 			const scene = new PlayedScene({
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Required character'],
-				forbiddenCharacters: [],
+				bannedCharacters: [],
 				answer: 'Answer',
 				tone: Tone.Light
 			});
-			const result = scene.forbidCharacter('Forbidden character');
+			const result = scene.banCharacter('Banned character');
 			result.should.deep.equal(new PlayedScene({
 				id: scene.id,
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Required character'],
-				forbiddenCharacters: ['Forbidden character'],
+				bannedCharacters: ['Banned character'],
 				answer: 'Answer',
 				tone: Tone.Light
 			}));
 		});
 
-		it('should have the forbidden character when there was already one in the PlayedScene', function() {
+		it('should have the banned character when there was already one in the PlayedScene', function() {
 			const scene = new PlayedScene({
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Required character'],
-				forbiddenCharacters: ['First forbidden character'],
+				bannedCharacters: ['First banned character'],
 				answer: 'Answer',
 				tone: Tone.Light
 			});
-			const result = scene.forbidCharacter('Second forbidden character');
+			const result = scene.banCharacter('Second banned character');
 			result.should.deep.equal(new PlayedScene({
 				id: scene.id,
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Required character'],
-				forbiddenCharacters: ['First forbidden character', 'Second forbidden character'],
+				bannedCharacters: ['First banned character', 'Second banned character'],
 				answer: 'Answer',
 				tone: Tone.Light
 			}));
 		});
 
-		it('should throw when there was already two forbidden characters in the PlayedScene', function() {
+		it('should throw when there was already two banned characters in the PlayedScene', function() {
 			const scene = new PlayedScene({
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Required character'],
-				forbiddenCharacters: ['First forbidden character', 'Second forbidden character'],
+				bannedCharacters: ['First banned character', 'Second banned character'],
 				answer: 'Answer',
 				tone: Tone.Light
 			});
-			(() => scene.forbidCharacter('Third forbidden character')).should.throw('Can\'t have more than two forbidden characters');
+			(() => scene.banCharacter('Third banned character')).should.throw('Can\'t have more than two banned characters');
 		});
 
 	});
 
 	context('allowCharacter', function() {
 
-		it('should remove the allowed character from the forbidden characters when it was forbidden on the PlayedScene', function() {
+		it('should remove the allowed character from the banned characters when it was banned on the PlayedScene', function() {
 			const scene = new PlayedScene({
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Required character'],
-				forbiddenCharacters: ['First forbidden character', 'Second forbidden character'],
+				bannedCharacters: ['First banned character', 'Second banned character'],
 				answer: 'Answer',
 				tone: Tone.Light
 			});
-			const result = scene.allowCharacter('First forbidden character');
+			const result = scene.allowCharacter('First banned character');
 			result.should.deep.equal(new PlayedScene({
 				id: scene.id,
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Required character'],
-				forbiddenCharacters: ['Second forbidden character'],
+				bannedCharacters: ['Second banned character'],
 				answer: 'Answer',
 				tone: Tone.Light
 			}));
@@ -230,7 +230,7 @@ describe('PlayedScene', function() {
 			const scene = new PlayedScene({
 				question: 'Question',
 				requiredCharacters: ['Required character'],
-				forbiddenCharacters: ['Forbidden character'],
+				bannedCharacters: ['Banned character'],
 				answer: 'Answer',
 				tone: Tone.Light
 			});
@@ -240,7 +240,7 @@ describe('PlayedScene', function() {
 				question: 'Question',
 				stage: 'Stage description',
 				requiredCharacters: ['Required character'],
-				forbiddenCharacters: ['Forbidden character'],
+				bannedCharacters: ['Banned character'],
 				answer: 'Answer',
 				tone: Tone.Light
 			}));
@@ -251,7 +251,7 @@ describe('PlayedScene', function() {
 				question: 'Question',
 				stage: 'Old stage',
 				requiredCharacters: ['Required character'],
-				forbiddenCharacters: ['Forbidden character'],
+				bannedCharacters: ['Banned character'],
 				answer: 'Answer',
 				tone: Tone.Light
 			});
@@ -261,7 +261,7 @@ describe('PlayedScene', function() {
 				question: 'Question',
 				stage: 'Stage description',
 				requiredCharacters: ['Required character'],
-				forbiddenCharacters: ['Forbidden character'],
+				bannedCharacters: ['Banned character'],
 				answer: 'Answer',
 				tone: Tone.Light
 			}));
@@ -276,7 +276,7 @@ describe('PlayedScene', function() {
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Required character'],
-				forbiddenCharacters: ['Forbidden character'],
+				bannedCharacters: ['Banned character'],
 				tone: Tone.Light
 			});
 			const result = scene.setAnswer('Answer');
@@ -285,7 +285,7 @@ describe('PlayedScene', function() {
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Required character'],
-				forbiddenCharacters: ['Forbidden character'],
+				bannedCharacters: ['Banned character'],
 				answer: 'Answer',
 				tone: Tone.Light
 			}));
@@ -296,7 +296,7 @@ describe('PlayedScene', function() {
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Required character'],
-				forbiddenCharacters: ['Forbidden character'],
+				bannedCharacters: ['Banned character'],
 				answer: 'Answer',
 				tone: Tone.Light
 			});
@@ -306,7 +306,7 @@ describe('PlayedScene', function() {
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Required character'],
-				forbiddenCharacters: ['Forbidden character'],
+				bannedCharacters: ['Banned character'],
 				answer: 'New answer',
 				tone: Tone.Light
 			}));
@@ -321,7 +321,7 @@ describe('PlayedScene', function() {
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Required character'],
-				forbiddenCharacters: ['Forbidden character'],
+				bannedCharacters: ['Banned character'],
 				answer: 'Answer',
 				tone: Tone.Dark
 			});
@@ -331,7 +331,7 @@ describe('PlayedScene', function() {
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Required character'],
-				forbiddenCharacters: ['Forbidden character'],
+				bannedCharacters: ['Banned character'],
 				answer: 'Answer',
 				tone: Tone.Light
 			}));
@@ -346,7 +346,7 @@ describe('PlayedScene', function() {
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Required character'],
-				forbiddenCharacters: ['Forbidden character'],
+				bannedCharacters: ['Banned character'],
 				answer: 'Answer',
 				tone: Tone.Light
 			});
@@ -356,7 +356,7 @@ describe('PlayedScene', function() {
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Required character'],
-				forbiddenCharacters: ['Forbidden character'],
+				bannedCharacters: ['Banned character'],
 				answer: 'Answer',
 				tone: Tone.Dark
 			}));
@@ -372,7 +372,7 @@ describe('PlayedScene', function() {
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['First required character', 'Second required character'],
-				forbiddenCharacters: ['First forbidden character', 'Second forbidden character'],
+				bannedCharacters: ['First banned character', 'Second banned character'],
 				answer: 'Answer',
 				tone: Tone.Light
 			});
@@ -382,7 +382,7 @@ describe('PlayedScene', function() {
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['First required character', 'Second required character'],
-				forbiddenCharacters: ['First forbidden character', 'Second forbidden character'],
+				bannedCharacters: ['First banned character', 'Second banned character'],
 				answer: 'Answer',
 				tone: Tone.Light.toJSON()
 			});
@@ -398,7 +398,7 @@ describe('PlayedScene', function() {
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Character 1', 'Character 2'],
-				forbiddenCharacters: ['Character 3', 'Character 4'],
+				bannedCharacters: ['Character 3', 'Character 4'],
 				answer: 'Answer',
 				tone: 'Light'
 			});
@@ -407,7 +407,7 @@ describe('PlayedScene', function() {
 				question: 'Question',
 				stage: 'Stage',
 				requiredCharacters: ['Character 1', 'Character 2'],
-				forbiddenCharacters: ['Character 3', 'Character 4'],
+				bannedCharacters: ['Character 3', 'Character 4'],
 				answer: 'Answer',
 				tone: Tone.Light
 			}));
